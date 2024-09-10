@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833929657333",
+    "project_id": "ridemate-tiet",
+    "storage_bucket": "ridemate-tiet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833929657333:android:dd192aa082c7f7267bfebc",
+        "android_client_info": {
+          "package_name": "com.example.erickshawapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHcC1ciA59pz4WrNCS9KBP3d0FY4Xexm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
