@@ -1,20 +1,19 @@
-
 import '../../data/repositories/auth_repository.dart';
 import '../entities/auth_user.dart';
 
 
-class SignInUseCase {
-
+class SignUpUseCase {
   final AuthRepository authRepository;
 
-  SignInUseCase({required this.authRepository});
+  SignUpUseCase({required this.authRepository});
 
-  Future<AuthUser> call(SignInParams params) async {
+  Future<AuthUser> call(SignUpParams params) async {
     try {
-      return await authRepository.signIn(
+      AuthUser authUser = await authRepository.signUp(
         email: params.email,
-        password: params.password
+        password: params.password,
       );
+      return authUser;
     } on ArgumentError catch (error) {
       throw Exception(error);
     } catch (error) {
@@ -23,11 +22,11 @@ class SignInUseCase {
   }
 }
 
-class SignInParams {
+class SignUpParams {
   final String email;
   final String password;
 
-  SignInParams({
+  SignUpParams({
     required this.email,
     required this.password,
   });

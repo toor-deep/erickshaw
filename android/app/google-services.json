@@ -12,7 +12,20 @@
           "package_name": "com.example.erickshawapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "833929657333-hi7vn8qplmlhdqeb3qvg40ln1mkuvm4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.erickshawapp",
+            "certificate_hash": "e062cee005999ebce62d4e34e3e86e81c849c37e"
+          }
+        },
+        {
+          "client_id": "833929657333-mkvo1s08icrvth4mn6e9rathvkff2m1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAHcC1ciA59pz4WrNCS9KBP3d0FY4Xexm4"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833929657333-mkvo1s08icrvth4mn6e9rathvkff2m1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

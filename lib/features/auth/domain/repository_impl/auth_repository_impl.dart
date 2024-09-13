@@ -7,7 +7,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   const AuthRepositoryImpl({
     required this.remoteDataSource,
-
   });
 
   @override
@@ -26,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
       email: email,
       password: password,
     );
+
     return authModel.toEntity();
   }
 
@@ -39,6 +39,12 @@ class AuthRepositoryImpl implements AuthRepository {
       password: password,
     );
 
+    return authModel.toEntity();
+  }
+
+  @override
+  Future<AuthUser> signInWithGoogle() async {
+    final authModel = await remoteDataSource.signInWithGoogle();
     return authModel.toEntity();
   }
 

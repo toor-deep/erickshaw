@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../models/auth_user_model.dart';
 
@@ -15,15 +16,20 @@ abstract class AuthRemoteDataSource {
     required String password,
   });
 
+  Future<AuthUserModel> signInWithGoogle(); // Add Google sign-in
+
   Future<void> signOut();
 }
 
 class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   AuthRemoteDataSourceFirebase({
     firebase_auth.FirebaseAuth? firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
+    GoogleSignIn? googleSignIn,
+  })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
+        _googleSignIn = googleSignIn ?? GoogleSignIn();
 
   final firebase_auth.FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
 
   @override
   Stream<AuthUserModel?> get user {
@@ -42,7 +48,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   }) async {
     try {
       firebase_auth.UserCredential credential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
+      await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -64,7 +70,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   }) async {
     try {
       firebase_auth.UserCredential credential =
-          await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -80,9 +86,41 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   }
 
   @override
+  Future<AuthUserModel> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        throw Exception('Google sign-in aborted by user');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
+
+      final firebase_auth.AuthCredential credential =
+      firebase_auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final firebase_auth.UserCredential userCredential =
+      await _firebaseAuth.signInWithCredential(credential);
+
+      if (userCredential.user == null) {
+        throw Exception('Sign in with Google failed');
+      }
+
+      return AuthUserModel.fromFirebaseAuthUser(userCredential.user!);
+    } catch (error) {
+      throw Exception('Sign in with Google failed: $error');
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();
+      await _googleSignIn.signOut();
     } catch (error) {
       throw Exception('Sign out failed: $error');
     }

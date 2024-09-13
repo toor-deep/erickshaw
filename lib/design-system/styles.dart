@@ -123,16 +123,16 @@ class TextStyles {
 
   /// Declare a base style for each Family
   static TextStyle textFormFieldDefaultStyle = TextStyles.body1
-      .copyWith(fontWeight: FontWeight.normal, color: kGreyColor);
+      .copyWith(fontWeight: FontWeight.normal, color: Colors.black);
 
   static TextStyle textFormFieldDefaultStyle_12 = TextStyles.body2
-      .copyWith(fontWeight: FontWeight.normal, color: kGreyColor);
+      .copyWith(fontWeight: FontWeight.normal, color: Colors.black);
 
   static TextStyle textFormFieldDefaultStyle_14 = TextStyles.body2_14
-      .copyWith(fontWeight: FontWeight.normal, color: kGreyColor);
+      .copyWith(fontWeight: FontWeight.normal, color: Colors.black);
 
   static TextStyle textFormFieldDefaultStyle_16 = TextStyles.body1
-      .copyWith(fontWeight: FontWeight.normal, color: kGreyColor);
+      .copyWith(fontWeight: FontWeight.normal, color: Colors.black);
 
   static TextStyle get h1 => AppFont.copyWith(
       fontWeight: FontWeight.w600,
@@ -157,7 +157,7 @@ class TextStyles {
 
   static TextStyle get title4 => AppFont.copyWith(
       fontWeight: FontWeight.bold,
-      color: kGreyColor,
+      color: Colors.black,
       fontSize: FontSizes.s14,
       height: 1.31);
 
@@ -219,8 +219,8 @@ class TextStyles {
 
 class ButtonStyles {
   static ButtonStyle get normal => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(kPrimaryColor),
-      backgroundColor: WidgetStatePropertyAll(kLightGreyColor));
+      foregroundColor: WidgetStatePropertyAll(Colors.black),
+      backgroundColor: WidgetStatePropertyAll(Colors.white));
 
   static ButtonStyle get delete => const ButtonStyle(
       foregroundColor: WidgetStatePropertyAll(kRedColor),

@@ -1,3 +1,5 @@
+import 'package:erickshawapp/core/injections/dependencies.dart';
+import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/shared/constants.dart';
 import 'package:erickshawapp/shared/state/app-theme/app_theme_cubit.dart';
 import 'package:erickshawapp/splash_screen.dart';
@@ -10,38 +12,29 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import 'core/routing.dart';
 import 'design-system/styles.dart';
+import 'features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
+import 'features/auth/presentation/bloc/sign_up/sign_up_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  injectDependencies();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<SignInCubit>()),
+        BlocProvider(create: (context) => getIt<SignUpCubit>()),
+        // Add other providers here
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -70,11 +63,11 @@ class _MyHomePageState extends State<MyHomePage> {
           create: (context) => ThemeCubit(),
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
-              return MaterialApp.router(
+              return MaterialApp(
+                navigatorKey: appNavigationKey,
                 title: kAppName,
-                showPerformanceOverlay: false,
-                themeMode: ThemeMode.light,
                 debugShowCheckedModeBanner: false,
+                themeMode: ThemeMode.light,
                 debugShowMaterialGrid: false,
                 theme: state.themeData,
                 builder: (context, child) => Stack(
@@ -85,26 +78,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   ],
                 ),
-                routerConfig: appRouter,
+                onGenerateRoute: generateRoute,
+                home: const SignInScreen()
               );
             },
           ),
         ),
       ),
     );
-  }
-}
-
-class App extends StatefulWidget {
-  const App({super.key});
-
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  Widget build(BuildContext context) {
-    return SplashView();
   }
 }
