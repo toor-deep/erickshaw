@@ -161,13 +161,6 @@ class TextStyles {
       fontSize: FontSizes.s14,
       height: 1.31);
 
-  // static TextStyle get appBarTitle => AppFont.copyWith(
-  //     fontWeight: FontWeight.w700, fontSize: FontSizes.s16, color: Colors.grey);
-  static TextStyle get title5 => AppFont.copyWith(
-      fontWeight: FontWeight.w200,
-      color: kGreyColor,
-      fontSize: FontSizes.s14,
-      height: 1.31);
   static TextStyle get appBarTitle => AppFont.copyWith(
       fontWeight: FontWeight.w600,
       fontSize: FontSizes.s16,
@@ -218,32 +211,26 @@ class TextStyles {
 }
 
 class ButtonStyles {
-  static ButtonStyle get normal => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(Colors.black),
-      backgroundColor: WidgetStatePropertyAll(Colors.white));
+  static ButtonStyle get normal =>
+      const ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll(Colors.black),
+          backgroundColor: WidgetStatePropertyAll(Colors.white));
 
-  static ButtonStyle get delete => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(kRedColor),
-      backgroundColor: WidgetStatePropertyAll(greyWhiteBg));
 
-  static ButtonStyle get danger => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(Colors.white),
-      backgroundColor: WidgetStatePropertyAll(Colors.red));
+  static ButtonStyle get blackbg =>
+      const ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll(Colors.white),
+          backgroundColor: WidgetStatePropertyAll(Colors.black));
 
-  static ButtonStyle get ok => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(kGreenColor),
-      backgroundColor: WidgetStatePropertyAll(greyWhiteBg));
 
-  static ButtonStyle get green => ButtonStyle(
-      textStyle: WidgetStatePropertyAll(TextStyles.body2),
-      foregroundColor: const WidgetStatePropertyAll(Colors.white),
-      backgroundColor: const WidgetStatePropertyAll(Colors.green));
+  static ButtonStyle get green =>
+      ButtonStyle(
+          textStyle: WidgetStatePropertyAll(TextStyles.body2),
+          foregroundColor: const WidgetStatePropertyAll(Colors.white),
+          backgroundColor: const WidgetStatePropertyAll(Colors.green));
 
-  static ButtonStyle get v2 => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(Colors.white),
-      backgroundColor: WidgetStatePropertyAll(Colors.blue));
-
-  static ButtonStyle get cancel => const ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(Colors.grey),
-      backgroundColor: WidgetStatePropertyAll(greyWhiteBg));
+  static ButtonStyle get v2 =>
+      const ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll(Colors.white),
+          backgroundColor: WidgetStatePropertyAll(Colors.blue));
 }

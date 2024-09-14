@@ -16,7 +16,7 @@ final WidgetStateProperty<Color?> overlayColor =
     }
     // Material color when switch is disabled.
     if (states.contains(WidgetState.disabled)) {
-      return Colors.grey.shade400;
+      return Colors.black;
     }
     // Otherwise return null to set default material color
     // for remaining states such as when the switch is
@@ -53,11 +53,6 @@ ThemeData get LightTheme => ThemeData(
           ),
         ),
       ),
-      dividerTheme: const DividerThemeData(color: kLightGreyColor),
-      switchTheme: SwitchThemeData(
-        trackColor: const WidgetStatePropertyAll(kLightGreyColor),
-        thumbColor: overlayColor,
-      ),
       scaffoldBackgroundColor: Colors.white,
       cupertinoOverrideTheme: const CupertinoThemeData(
           primaryColor: kPrimaryColor, applyThemeToAll: true),
@@ -70,7 +65,7 @@ ThemeData get LightTheme => ThemeData(
           if (states.contains(WidgetState.selected)) {
             return kPrimaryColor; // Active color
           }
-          return Colors.grey; // Passive color
+          return Colors.black; // Passive color
         }),
       ),
       appBarTheme: AppBarTheme(
@@ -84,17 +79,17 @@ ThemeData get LightTheme => ThemeData(
       tabBarTheme: const TabBarTheme(
           labelColor: kPrimaryColor,
           indicatorColor: kPrimaryColor,
-          unselectedLabelColor: Colors.grey,
+          unselectedLabelColor: Colors.black,
           indicatorSize: TabBarIndicatorSize.label),
       inputDecorationTheme: const InputDecorationTheme(
           contentPadding: EdgeInsets.fromLTRB(8, 5.0, 0, 5.0),
           border: OutlineInputBorder(),
           hintStyle: TextStyle(
             fontSize: 16,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           isDense: false,
-          suffixIconColor: Colors.grey),
+          suffixIconColor: Colors.black),
       filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
               textStyle: WidgetStatePropertyAll(TextStyles.body1),

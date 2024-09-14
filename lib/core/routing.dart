@@ -1,13 +1,19 @@
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:erickshawapp/features/home/home_screen.dart';
+import 'package:erickshawapp/features/my_rides/my_rides_ui.dart';
+import 'package:erickshawapp/features/privacy_and_terms/privacy.dart';
+import 'package:erickshawapp/features/privacy_and_terms/terms_and_coditions.dart';
+import 'package:erickshawapp/features/profile/my_profile.dart';
+import 'package:erickshawapp/features/settings/change_password.dart';
+import 'package:erickshawapp/features/settings/settings_view.dart';
+import 'package:erickshawapp/features/wallet/my_wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
-
   switch (settings.name) {
     case '/':
       return MaterialPageRoute(
@@ -22,7 +28,35 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const SignUpScreen(),
       );
     case '/Home':
-      return MaterialPageRoute(builder: (context) => HomeScreen(),);
+      return MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      );
+
+    case '/MyRides':
+      return MaterialPageRoute(
+        builder: (context) => MyRides(),
+      );
+    case '/MyWallet':
+      return MaterialPageRoute(
+        builder: (context) => MyWallet(),
+      );
+    case '/Settings':
+      return MaterialPageRoute(
+        builder: (context) => Settings(),
+      );
+    case '/TermsAndConditions':
+      return MaterialPageRoute(
+        builder: (context) => TermsAndCoditions(),
+      );
+    case '/Privacy':
+      return MaterialPageRoute(
+        builder: (context) => const Privacy(),
+      );
+    case '/ChangePassword':
+      return MaterialPageRoute(builder: (context) => const ChangePasswordScreen(),);
+
+    case '/MyProfile':
+      return MaterialPageRoute(builder: (context) => MyProfile(),);
 
     default:
       return MaterialPageRoute(
