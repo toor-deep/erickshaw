@@ -22,6 +22,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late SignInCubit signInCubit;
   VehicleType selectedVehicle = VehicleType.none;
+  String? _startLocation;
+  String? _endLocation;
+  List<String> destinations = [
+    'Agira Hall',
+    'Ambaram Hall',
+    'Amritam Hall',
+    'Ananta Hall',
+    'Anantam Hall',
+    'CS Cafe',
+    'Hostel FR-F',
+    'Hostel PG',
+    'Neeram Hall',
+    'Prithvi Hall',
+    'Streat Cafe (Admin Block)',
+    'Tejas Hall',
+    'Vahni Hall',
+    'Viyat Hall',
+    'Vyan Hall',
+    'Vyom Hall',
+    'Waterbody Cafe (Library)'
+  ];
 
   @override
   void initState() {
@@ -31,25 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> destinations = [
-      'Agira Hall',
-      'Ambaram Hall',
-      'Amritam Hall',
-      'Ananta Hall',
-      'Anantam Hall',
-      'CS Cafe',
-      'Hostel FR-F',
-      'Hostel PG',
-      'Neeram Hall',
-      'Prithvi Hall',
-      'Streat Cafe (Admin Block)',
-      'Tejas Hall',
-      'Vahni Hall',
-      'Viyat Hall',
-      'Vyan Hall',
-      'Vyom Hall',
-      'Waterbody Cafe (Library)'
-    ];
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -216,10 +218,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 0.06.sh,
                       child: ElevatedButton(
                         style: ButtonStyles.blackbg,
-                        onPressed: () {},
-                        child: const Text('Send Request'),
+                        onPressed: () {
+                          final String? startLocation = _startLocation;
+                          final String? endLocation = _endLocation;
+
+                          if (selectedVehicle == VehicleType.none || startLocation == null || endLocation == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please select a vehicle, start and end location.')),
+                            );
+                            return;
+                          }
+
+                          Navigator.pushNamed(
+                            context,
+                            '/CheckOut',
+                            arguments: {
+                              'vehicle': selectedVehicle,
+                              'startLocation': startLocation,
+                              'endLocation': endLocation,
+                            },
+                          );
+                        },
+                        child: const Text('Next'),
                       ),
                     ),
+
                   ],
                 ),
               ),
@@ -252,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       dropdownColor: Colors.white,
       iconEnabledColor: Colors.black,
-      value: null,
+      value: _startLocation,
       items: ['Location 1', 'Location 2', 'Location 3', 'Location 4']
           .map((String location) {
         return DropdownMenuItem<String>(
@@ -263,7 +286,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       }).toList(),
-      onChanged: (String? newValue) {},
+      onChanged: (String? newValue) {
+        setState(() {
+          _startLocation=newValue;
+        });
+
+      },
     );
   }
 
@@ -291,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // White background for the dropdown
       iconEnabledColor: Colors.black,
 
-      value: null,
+      value: _endLocation,
       items: destinations.map((String location) {
         return DropdownMenuItem<String>(
           value: location,
@@ -303,7 +331,9 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }).toList(),
       onChanged: (String? newValue) {
-        // Handle change
+        setState(() {
+          _endLocation=newValue;
+        });
       },
     );
   }
@@ -387,3 +417,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+

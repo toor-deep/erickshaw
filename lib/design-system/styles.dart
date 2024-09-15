@@ -223,14 +223,4 @@ class ButtonStyles {
           backgroundColor: WidgetStatePropertyAll(Colors.black));
 
 
-  static ButtonStyle get green =>
-      ButtonStyle(
-          textStyle: WidgetStatePropertyAll(TextStyles.body2),
-          foregroundColor: const WidgetStatePropertyAll(Colors.white),
-          backgroundColor: const WidgetStatePropertyAll(Colors.green));
-
-  static ButtonStyle get v2 =>
-      const ButtonStyle(
-          foregroundColor: WidgetStatePropertyAll(Colors.white),
-          backgroundColor: WidgetStatePropertyAll(Colors.blue));
 }

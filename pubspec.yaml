@@ -43,6 +43,8 @@ dependencies:
   flutter_screenutil:
   flutter_styled_toast:
   google_fonts:
+  crypto:
+  smooth_page_indicator:
   flutter_dropdown_alert:
   go_router:
   path_provider:
@@ -51,7 +53,7 @@ dependencies:
   flutter_signin_button:
   google_sign_in:
   flutter_dash:
-
+  phonepe_payment_sdk: ^2.0.3
   get_it:
   toastification:
   go_router_paths:

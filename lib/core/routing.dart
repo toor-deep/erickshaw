@@ -1,7 +1,8 @@
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:erickshawapp/features/home/home_screen.dart';
+import 'package:erickshawapp/features/book_ride/check_out.dart';
 import 'package:erickshawapp/features/my_rides/my_rides_ui.dart';
+import 'package:erickshawapp/features/payment/payment_screen.dart';
 import 'package:erickshawapp/features/privacy_and_terms/privacy.dart';
 import 'package:erickshawapp/features/privacy_and_terms/terms_and_coditions.dart';
 import 'package:erickshawapp/features/profile/my_profile.dart';
@@ -11,6 +12,7 @@ import 'package:erickshawapp/features/wallet/my_wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../features/book_ride/home_screen.dart';
 import '../main.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -56,7 +58,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const ChangePasswordScreen(),);
 
     case '/MyProfile':
-      return MaterialPageRoute(builder: (context) => MyProfile(),);
+      return MaterialPageRoute(builder: (context) => const MyProfile(),);
+    case '/CheckOut':
+      return MaterialPageRoute(builder: (context) => CheckOutScreen(),);
+
+    case '/Payment':
+      return MaterialPageRoute(builder: (context) => const PaymentScreen(),);
 
     default:
       return MaterialPageRoute(
