@@ -33,7 +33,9 @@ class _SettingsState extends State<Settings> {
           ),
         ),
         drawer: CustomDrawer(),
-        body: Stack(children: [
+        body: Stack(
+            children: [
+
           Positioned(
             bottom: 0,
             left: 0,

@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../features/auth/domain/usecase/sign_up.usecase.dart';
 import '../../features/auth/presentation/bloc/sign_up/sign_up_cubit.dart';
+import '../../shared/state/app-theme/app_theme_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -29,4 +30,5 @@ void injectDependencies() {
       SignInCubit(signInUseCase: getIt<SignInUseCase>(),signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>()));
   getIt.registerSingleton<SignUpCubit>(
       SignUpCubit(signUpUseCase: getIt<SignUpUseCase>()));
+  getIt.registerSingleton<ThemeCubit>(ThemeCubit());
 }

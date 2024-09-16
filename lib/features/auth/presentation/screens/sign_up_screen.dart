@@ -75,6 +75,10 @@ class _SignInScreenState extends State<SignUpScreen> {
                           },
                           decoration: InputDecoration(
                             label: const Text('Email'),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
                             errorText: state.emailStatus == EmailStatus.invalid
                                 ? 'Invalid email'
                                 : null,
@@ -90,6 +94,10 @@ class _SignInScreenState extends State<SignUpScreen> {
                                 state.passwordStatus == PasswordStatus.invalid
                                     ? 'Invalid password'
                                     : null,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -101,6 +109,10 @@ class _SignInScreenState extends State<SignUpScreen> {
                         TextFormField(
                           decoration: InputDecoration(
                             label: const Text('Phone'),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -110,7 +122,6 @@ class _SignInScreenState extends State<SignUpScreen> {
                           width: double.infinity,
                           height: 0.06.sh,
                           child: ElevatedButton(
-                            style: ButtonStyles.normal,
                             onPressed:
                                 context.read<SignUpCubit>().state.formStatus ==
                                         FormStatus.submissionInProgress

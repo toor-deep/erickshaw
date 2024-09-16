@@ -45,3 +45,22 @@ class AppPadding {
   }
 }
 
+List<String> destinations = [
+  'Agira Hall',
+  'Ambaram Hall',
+  'Amritam Hall',
+  'Ananta Hall',
+  'Anantam Hall',
+  'CS Cafe',
+  'Hostel FR-F',
+  'Hostel PG',
+  'Neeram Hall',
+  'Prithvi Hall',
+  'Streat Cafe (Admin Block)',
+  'Tejas Hall',
+  'Vahni Hall',
+  'Viyat Hall',
+  'Vyan Hall',
+  'Vyom Hall',
+  'Waterbody Cafe (Library)'
+];

@@ -84,9 +84,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Image.asset(
-                            vehicle == VehicleType.auto
-                                ? AppImages.logo
-                                : AppImages.rickshaw,
+                            AppImages.erickshaw,
                             height: 120,
                             width: 120,
                           ),
@@ -168,7 +166,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     width: double.infinity,
                     height: 0.06.sh,
                     child: ElevatedButton(
-                      style: ButtonStyles.blackbg,
                       onPressed: () {
                         Navigator.pushNamed(context, '/Payment');
                       },

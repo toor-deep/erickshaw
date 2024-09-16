@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../shared/constants.dart';
 
-enum VehicleType { auto, rickshaw, none }
+enum VehicleType { rickshaw, none }
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,25 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   VehicleType selectedVehicle = VehicleType.none;
   String? _startLocation;
   String? _endLocation;
-  List<String> destinations = [
-    'Agira Hall',
-    'Ambaram Hall',
-    'Amritam Hall',
-    'Ananta Hall',
-    'Anantam Hall',
-    'CS Cafe',
-    'Hostel FR-F',
-    'Hostel PG',
-    'Neeram Hall',
-    'Prithvi Hall',
-    'Streat Cafe (Admin Block)',
-    'Tejas Hall',
-    'Vahni Hall',
-    'Viyat Hall',
-    'Vyan Hall',
-    'Vyom Hall',
-    'Waterbody Cafe (Library)'
-  ];
+
 
   @override
   void initState() {
@@ -87,16 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
               width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text(
-                    'Hello, ${signInCubit.state.authUser?.name ?? "User"}',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hello, ${signInCubit.state.authUser?.name ?? "User"}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      Spacing.hmed,
+                      const Text("how are you ? hope you are doing great"),
+                    ],
                   ),
-                  Spacing.hmed,
-                  const Text("how are you ? hope you are doing great"),
                 ],
               ),
             ),
@@ -122,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     CarouselSlider(
                       options: CarouselOptions(
-                        height: 200.0,
+                        height: 0.15.sh,
                         autoPlay: true,
                         enlargeCenterPage: true,
                         viewportFraction: 1.0,
@@ -155,6 +141,34 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         );
                       }).toList(),
+                    ),
+                    Spacing.hmed,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/PreBook');
+                      },
+                      child: Container(
+                        width: 1.sw,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                            color: Colors.grey.shade200, borderRadius: Corners.lgBorder),
+                        padding: Paddings.contentPadding,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              'PreBook Your Ride',
+                              maxLines: 1,
+                              style:  TextStyles.textFormFieldDefaultStyle_14.copyWith(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                            const Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                     Spacing.hmed,
                     Text(
@@ -217,14 +231,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: double.infinity,
                       height: 0.06.sh,
                       child: ElevatedButton(
-                        style: ButtonStyles.blackbg,
                         onPressed: () {
                           final String? startLocation = _startLocation;
                           final String? endLocation = _endLocation;
 
-                          if (selectedVehicle == VehicleType.none || startLocation == null || endLocation == null) {
+                          if (selectedVehicle == VehicleType.none ||
+                              startLocation == null ||
+                              endLocation == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please select a vehicle, start and end location.')),
+                              const SnackBar(
+                                  content: Text(
+                                      'Please select a vehicle, start and end location.')),
                             );
                             return;
                           }
@@ -242,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Text('Next'),
                       ),
                     ),
-
+                    Spacing.hmed,
                   ],
                 ),
               ),
@@ -288,9 +305,8 @@ class _HomeScreenState extends State<HomeScreen> {
       }).toList(),
       onChanged: (String? newValue) {
         setState(() {
-          _startLocation=newValue;
+          _startLocation = newValue;
         });
-
       },
     );
   }
@@ -325,14 +341,13 @@ class _HomeScreenState extends State<HomeScreen> {
           value: location,
           child: Text(
             location,
-            style: TextStyles
-                .textFormFieldDefaultStyle_14, // Black text color for dropdown items
+            style: TextStyles.textFormFieldDefaultStyle_14,
           ),
         );
       }).toList(),
       onChanged: (String? newValue) {
         setState(() {
-          _endLocation=newValue;
+          _endLocation = newValue;
         });
       },
     );
@@ -342,42 +357,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedVehicle = selectedVehicle == VehicleType.auto
-                  ? VehicleType.none
-                  : VehicleType.auto;
-            });
-          },
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: selectedVehicle == VehicleType.auto
-                  ? Colors.grey.shade200
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.grey.shade400),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  AppImages.logo,
-                  height: 120,
-                  width: 120,
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Auto",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Spacing.wlg,
         GestureDetector(
           onTap: () {
             setState(() {
@@ -400,13 +379,13 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  AppImages.rickshaw,
+                  AppImages.erickshaw,
                   height: 120,
                   width: 120,
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  "Rickshaw",
+                  "E Rickshaw",
                   style: TextStyle(color: Colors.black),
                 ),
               ],
@@ -417,5 +396,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-

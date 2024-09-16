@@ -1,6 +1,7 @@
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:erickshawapp/features/book_ride/check_out.dart';
+import 'package:erickshawapp/features/book_ride/pre_book_ride.dart';
 import 'package:erickshawapp/features/my_rides/my_rides_ui.dart';
 import 'package:erickshawapp/features/payment/payment_screen.dart';
 import 'package:erickshawapp/features/privacy_and_terms/privacy.dart';
@@ -64,6 +65,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case '/Payment':
       return MaterialPageRoute(builder: (context) => const PaymentScreen(),);
+
+    case '/PreBook':
+      return MaterialPageRoute(builder: (context) => const PreBookRide(),);
 
     default:
       return MaterialPageRoute(

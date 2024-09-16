@@ -39,6 +39,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ),
       body: Stack(
         children: [
+
           Positioned(
             bottom: 0,
             left: 0,
@@ -64,11 +65,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         obscureText: _isObscureCurrent,
                         decoration: InputDecoration(
                           floatingLabelStyle: const TextStyle(color: Colors.black),
-                          focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)
-                          ),
+
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(color: Colors.black)
                           ),
                           labelText: 'Current Password',
                           suffixIcon: IconButton(
@@ -162,7 +162,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         width: double.infinity,
                         height: 0.06.sh,
                         child: ElevatedButton(
-                          style: ButtonStyles.blackbg,
                           onPressed:() {
 
                           },

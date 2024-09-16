@@ -66,11 +66,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         Spacing.hlg,
                         const Text(
                           'Welcome Back, We are happy to have you back',
+                          style: TextStyle(color: Colors.white),
                         ),
                         Spacing.hlg,
                         Spacing.hlg,
                         Spacing.hlg,
                         TextFormField(
+                          style: TextStyle(color: Colors.white),
                           onChanged: (String value) {
                             context.read<SignInCubit>().emailChanged(value);
                           },
@@ -80,18 +82,22 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ? 'Invalid email'
                                 : null,
                             border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                         Spacing.hlg,
                         TextFormField(
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             label: const Text('Password'),
                             errorText:
                                 state.passwordStatus == PasswordStatus.invalid
                                     ? 'Invalid password'
                                     : null,
+
                             border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                           onChanged: (String value) {
@@ -103,7 +109,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: double.infinity,
                           height: 0.06.sh,
                           child: ElevatedButton(
-                            style: ButtonStyles.normal,
                             onPressed:
                                 context.read<SignInCubit>().state.formStatus ==
                                         FormStatus.submissionInProgress
@@ -127,7 +132,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         Center(
                           child: Text(
                             'Or',
-                            style: TextStyles.title1,
+                            style: TextStyles.title1.copyWith(color: Colors.white),
                           ),
                         ),
                         Spacing.hlg,

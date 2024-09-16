@@ -25,6 +25,7 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => getIt<SignInCubit>()),
         BlocProvider(create: (context) => getIt<SignUpCubit>()),
+        BlocProvider(create: (_) => getIt<ThemeCubit>()),
         // Add other providers here
       ],
       child: const MyApp(),
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 themeMode: ThemeMode.light,
                 debugShowMaterialGrid: false,
-                theme: state.themeData,
+              //  theme: state.themeData,
                 builder: (context, child) => Stack(
                   children: [
                     child ?? const SizedBox(),

@@ -16,7 +16,7 @@ class ThemeState {
 class ThemeCubit extends Cubit<ThemeState> {
   bool isDarkMode = false;
 
-  ThemeCubit() : super(ThemeState(themeData: LightTheme)) {
+  ThemeCubit() : super(ThemeState(themeData: lightTheme)) {
     _setInitialTheme();
   }
 
@@ -36,7 +36,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   // Apply the theme based on whether it's dark mode or not
   ThemeState _getThemeState() {
     return ThemeState(
-      themeData: isDarkMode ? DarkTheme : LightTheme, // Choose your light and dark themes
+      themeData: isDarkMode ? DarkTheme : lightTheme,
       isDarkMode: isDarkMode,
     );
   }

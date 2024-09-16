@@ -186,7 +186,6 @@ class _MyProfileState extends State<MyProfile> {
                       width: double.infinity,
                       height: 0.06.sh,
                       child: ElevatedButton(
-                        style: ButtonStyles.blackbg,
                         onPressed: () {
                           setState(() {
                             isUpdate = !isUpdate;

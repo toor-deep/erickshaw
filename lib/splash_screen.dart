@@ -27,7 +27,7 @@ class SplashView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Image(image: AssetImage(AppImages.logo)),
+                const Image(image: AssetImage(AppImages.erickshaw)),
                 Spacing.hmed,
                 const Text(kAppName,
                     style: TextStyle(

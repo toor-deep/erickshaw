@@ -114,7 +114,7 @@ class MyRides extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Image.asset(
-                                      AppImages.logo,
+                                      AppImages.erickshaw,
                                       height: 120,
                                       width: 120,
                                     ),
@@ -123,14 +123,15 @@ class MyRides extends StatelessWidget {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:  EdgeInsets.all(8.0),
                                 child: SizedBox(
                                   width:double.infinity,
                                   child: OutlinedButton(
+
                                   onPressed: () {
                                     Navigator.pushNamed(context,'/CheckOut');
                                   },
-                                      child:  Text("Book Again",style: TextStyles.textFormFieldDefaultStyle_14.copyWith(fontWeight: FontWeight.bold),)),
+                                      child:  Text("Book Again")),
                                 ),
                               )
                             ],
