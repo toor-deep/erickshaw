@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart'; // For formatting date and time
-
-import '../../design-system/styles.dart';
+import 'package:intl/intl.dart';
 import '../../shared/constants.dart';
 import 'home_screen.dart';
 
@@ -38,6 +36,11 @@ class _PreBookRideState extends State<PreBookRide> {
       ),
       body: Stack(
         children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Theme.of(context).primaryColor,
+          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -65,12 +68,15 @@ class _PreBookRideState extends State<PreBookRide> {
                     ),
                     Spacing.hmed,
                     TextFormField(
+                      style: Theme.of(context).textTheme.bodySmall,
                       controller: _dateController,
                       readOnly: true,
                       // This makes the TextFormField non-editable
                       onTap: () => _selectDate(context),
                       decoration: InputDecoration(
                         labelText: 'Choose Date',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        labelStyle: Theme.of(context).textTheme.bodySmall,
                         suffixIcon: InkWell(
                           onTap: () => _selectDate(context),
                           child:
@@ -93,11 +99,14 @@ class _PreBookRideState extends State<PreBookRide> {
                     ),
                     Spacing.hmed,
                     TextFormField(
+                      style: Theme.of(context).textTheme.bodySmall,
                       controller: _timeController,
                       readOnly: true,
                       onTap: () => _selectTime(context),
                       decoration: InputDecoration(
                         labelText: 'Choose Time',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        labelStyle: Theme.of(context).textTheme.bodySmall,
                         suffixIcon: InkWell(
                           onTap: () => _selectTime(context),
                           child: const Icon(Icons.lock_clock), // Calendar icon
@@ -180,8 +189,8 @@ class _PreBookRideState extends State<PreBookRide> {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: "Start Location",
+        labelStyle: Theme.of(context).textTheme.bodySmall,
         floatingLabelBehavior: FloatingLabelBehavior.never,
-        floatingLabelStyle: const TextStyle(color: Colors.black),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0), // Rounded corners
         ),
@@ -198,7 +207,7 @@ class _PreBookRideState extends State<PreBookRide> {
           value: location,
           child: Text(
             location,
-            style: TextStyles.textFormFieldDefaultStyle_14,
+            style: const TextStyle(color: Colors.black),
           ),
         );
       }).toList(),
@@ -214,6 +223,7 @@ class _PreBookRideState extends State<PreBookRide> {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: "End Location",
+        labelStyle: Theme.of(context).textTheme.bodySmall,
         floatingLabelBehavior: FloatingLabelBehavior.never,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0), // Rounded corners
@@ -232,7 +242,7 @@ class _PreBookRideState extends State<PreBookRide> {
           value: location,
           child: Text(
             location,
-            style: TextStyles.textFormFieldDefaultStyle_14,
+            style: const TextStyle(color: Colors.black),
           ),
         );
       }).toList(),

@@ -44,7 +44,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                 child: Container(
                   height: 0.6.sh,
                   decoration: const BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.white,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(50.0), // Adjust radius as needed
                     ),
@@ -55,49 +55,44 @@ class _SignInScreenState extends State<SignUpScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Sign Up',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Spacing.hlg,
-                        const Text(
+                        Text(
                           'Create your account to start using RideMate',
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Spacing.hlg,
                         Spacing.hlg,
                         TextFormField(
+                          style: Theme.of(context).textTheme.bodySmall,
                           onChanged: (String value) {
                             context.read<SignUpCubit>().emailChanged(value);
                           },
                           decoration: InputDecoration(
                             label: const Text('Email'),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(10)
-                            ),
+
                             errorText: state.emailStatus == EmailStatus.invalid
                                 ? 'Invalid email'
                                 : null,
+                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                         Spacing.hlg,
                         TextFormField(
+                          style: Theme.of(context).textTheme.bodySmall,
                           decoration: InputDecoration(
                             label: const Text('Password'),
                             errorText:
                                 state.passwordStatus == PasswordStatus.invalid
                                     ? 'Invalid password'
                                     : null,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(10)
-                            ),
+                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -107,12 +102,11 @@ class _SignInScreenState extends State<SignUpScreen> {
                         ),
                         Spacing.hlg,
                         TextFormField(
+                          style: Theme.of(context).textTheme.bodySmall,
                           decoration: InputDecoration(
                             label: const Text('Phone'),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(10)
-                            ),
+
+                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -144,9 +138,9 @@ class _SignInScreenState extends State<SignUpScreen> {
                           child: RichText(
                             text: TextSpan(
                               children: [
-                                const TextSpan(
+                                 TextSpan(
                                   text: 'Already have an account ? ',
-                                  style: TextStyle(color: Colors.white),
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 TextSpan(
                                   text: 'Sign In',

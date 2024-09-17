@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_up/sign_up_state.dart';
 import 'package:erickshawapp/shared/toast_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../domain/usecase/sign_up.usecase.dart';
 import '../sign_in/sign_in_state.dart';
@@ -60,6 +61,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       final user = await _signUpUseCase(
         SignUpParams(email: state.email!, password: state.password!),
       );
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
       onSuccess();
       emit(state.copyWith(
           formStatus: FormStatus.submissionSuccess,

@@ -1,34 +1,48 @@
-import 'package:erickshawapp/shared/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../design-system/styles.dart';
-
-void showDeleteDialog({required BuildContext context}) {
+void showDeleteDialog(
+    {required BuildContext context, required Function onTap}) {
   showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title:  Text('Are you sure want to perform this action?',style: TextStyles.title1.copyWith(color: Colors.black),),
-          content:  Text('Your data will be cleared',style: TextStyles.body1.copyWith(color: Colors.black),),
-          actions: [
-            FilledButton(
-                style: const ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.red)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Yes',
-                  style: TextStyle(color: Colors.white),
-                )),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('No',  style: TextStyle(color: Colors.black),))
-          ],
-        );
-      });
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Are you sure you want to perform this action?',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        content: const Text(
+          'Your data will be cleared',
+        ),
+        actions: [
+          FilledButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              onTap();
+            },
+            child: const Text(
+              'Yes',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              'No',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

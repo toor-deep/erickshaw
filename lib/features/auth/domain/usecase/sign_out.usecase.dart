@@ -1,19 +1,17 @@
-import '../../domain/entities/auth_user.dart';
+import 'package:erickshawapp/features/auth/data/repositories/auth_repository.dart';
 
-abstract class AuthRepository {
-  Stream<AuthUser> get authUser;
 
-  Future<AuthUser> signUp({
-    required String email,
-    required String password,
-  });
+class SignOutUseCase {
+  final AuthRepository authRepository;
 
-  Future<AuthUser> signIn({
-    required String email,
-    required String password,
-  });
+  SignOutUseCase({required this.authRepository});
 
-  Future<AuthUser> signInWithGoogle();
 
-  Future<void> signOut();
+  Future<void> call() async {
+    try {
+      await  authRepository.signOut();
+    } catch (e) {
+      throw Exception('Failed to sign out: ${e.toString()}');
+    }
+  }
 }

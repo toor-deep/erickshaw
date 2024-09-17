@@ -16,8 +16,8 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
-    final Map<dynamic, dynamic>? args = ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?;
-
+    final Map<dynamic, dynamic>? args =
+        ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?;
 
     final VehicleType? vehicle = args?['vehicle'] as VehicleType?;
     final String? startLocation = args?['startLocation'] as String?;
@@ -37,17 +37,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ),
       drawer: CustomDrawer(),
       body: Stack(children: [
-        const Padding(
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Theme.of(context).primaryColor,
+        ),
+        Padding(
           padding: EdgeInsets.all(16.0),
           child: SizedBox(
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Your Ride',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
+                Text('Your Ride',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white)),
               ],
             ),
           ),
@@ -95,23 +101,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "PickUp Location",
-                                style: TextStyles.textFormFieldDefaultStyle_14
-                                    .copyWith(fontWeight: FontWeight.bold),
                               ),
-                              Text(startLocation??"",
-                                  style:
-                                      TextStyles.textFormFieldDefaultStyle_14),
-                              Spacing.hmed,
                               Text(
-                                "Destination Location",
-                                style: TextStyles.textFormFieldDefaultStyle_14
-                                    .copyWith(fontWeight: FontWeight.bold),
+                                startLocation ?? "",
                               ),
-                              Text(endLocation??"",
-                                  style:
-                                      TextStyles.textFormFieldDefaultStyle_14),
+                              Spacing.hmed,
+                              const Text(
+                                "Destination Location",
+                              ),
+                              Text(
+                                endLocation ?? "",
+                              ),
                             ],
                           ),
                         )
@@ -119,44 +121,38 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                   ),
                   Spacing.hmed,
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Sub Total",
-                        style: TextStyles.title1.copyWith(color: Colors.black),
                       ),
                       Text(
                         "\$40",
-                        style: TextStyles.title1.copyWith(color: Colors.black),
                       ),
                     ],
                   ),
                   Spacing.hmed,
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Tax",
-                        style: TextStyles.title1.copyWith(color: Colors.black),
                       ),
                       Text(
                         "\$4",
-                        style: TextStyles.title1.copyWith(color: Colors.black),
                       ),
                     ],
                   ),
                   Spacing.hlg,
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Total",
-                        style: TextStyles.title1.copyWith(color: Colors.black),
                       ),
                       Text(
                         "\$44",
-                        style: TextStyles.title1.copyWith(color: Colors.black),
                       ),
                     ],
                   ),

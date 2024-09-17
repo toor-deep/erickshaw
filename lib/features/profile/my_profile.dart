@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../design-system/styles.dart';
 import '../../shared/app_images.dart';
 import '../../shared/constants.dart';
 import '../../shared/image_upload.dart';
@@ -43,6 +42,11 @@ class _MyProfileState extends State<MyProfile> {
         centerTitle: true,
       ),
       body: Stack(children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Theme.of(context).primaryColor,
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Align(
@@ -111,12 +115,15 @@ class _MyProfileState extends State<MyProfile> {
                   children: [
                     Text(
                       'Name',
-                      style: TextStyles.title1.copyWith(color: Colors.black),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Spacing.hmed,
                     TextFormField(
+                      style: Theme.of(context).textTheme.bodyMedium,
                       readOnly: isUpdate,
-                      style: TextStyles.textFormFieldDefaultStyle_14,
                       controller: nameController,
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -126,6 +133,7 @@ class _MyProfileState extends State<MyProfile> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         labelText: 'Name',
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -138,15 +146,19 @@ class _MyProfileState extends State<MyProfile> {
                     Spacing.hlg,
                     Text(
                       'Email',
-                      style: TextStyles.title1.copyWith(color: Colors.black),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Spacing.hmed,
                     TextFormField(
+                      style: Theme.of(context).textTheme.bodyMedium,
                       readOnly: true,
-                      style: TextStyles.textFormFieldDefaultStyle_14,
                       controller: emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black)),
@@ -158,16 +170,20 @@ class _MyProfileState extends State<MyProfile> {
                     Spacing.hlg,
                     Text(
                       'Phone',
-                      style: TextStyles.title1.copyWith(color: Colors.black),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Spacing.hmed,
                     TextFormField(
+                      style: Theme.of(context).textTheme.bodyMedium,
                       readOnly: isUpdate,
-                      style: TextStyles.textFormFieldDefaultStyle_14,
                       controller: phoneController,
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         labelText: 'Phone',
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
                         focusedBorder: const OutlineInputBorder(

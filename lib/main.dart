@@ -1,4 +1,4 @@
-import 'package:erickshawapp/core/injections/dependencies.dart';
+
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/shared/constants.dart';
 import 'package:erickshawapp/shared/state/app-theme/app_theme_cubit.dart';
@@ -10,7 +10,9 @@ import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
+import 'config/injections/dependencies.dart';
 import 'core/routing.dart';
+import 'core/theme/app_theme.dart';
 import 'design-system/styles.dart';
 import 'features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_cubit.dart';
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 themeMode: ThemeMode.light,
                 debugShowMaterialGrid: false,
-              //  theme: state.themeData,
+                  theme: AppTheme.data(state.isDarkMode),
                 builder: (context, child) => Stack(
                   children: [
                     child ?? const SizedBox(),
@@ -80,7 +82,7 @@ class MyApp extends StatelessWidget {
                   ],
                 ),
                 onGenerateRoute: generateRoute,
-                home: const SignInScreen()
+                home: const SplashView()
               );
             },
           ),

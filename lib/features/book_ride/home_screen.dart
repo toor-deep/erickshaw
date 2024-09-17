@@ -25,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _startLocation;
   String? _endLocation;
 
-
   @override
   void initState() {
     signInCubit = context.read<SignInCubit>();
@@ -65,6 +64,11 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: CustomDrawer(),
       body: Stack(
         children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Theme.of(context).primaryColor,
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
@@ -76,11 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Hello, ${signInCubit.state.authUser?.name ?? "User"}',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       Spacing.hmed,
-                      const Text("how are you ? hope you are doing great"),
+                      Text("how are you ? hope you are doing great",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.white)),
                     ],
                   ),
                 ],
@@ -150,19 +158,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         width: 1.sw,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                            color: Colors.grey.shade200, borderRadius: Corners.lgBorder),
+                            border: Border.all(color: Colors.grey),
+                            color: Colors.grey.shade200),
                         padding: Paddings.contentPadding,
-                        child: Row(
+                        child: const Row(
                           children: [
                             Expanded(
                                 child: Text(
                               'PreBook Your Ride',
                               maxLines: 1,
-                              style:  TextStyles.textFormFieldDefaultStyle_14.copyWith(fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                             )),
-                            const Icon(
+                            Icon(
                               Icons.keyboard_arrow_right_rounded,
                               color: Colors.black,
                             )
@@ -171,9 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Spacing.hmed,
-                    Text(
+                    const Text(
                       "Where you want to go ?",
-                      style: TextStyles.title1.copyWith(color: Colors.black),
                     ),
                     Spacing.hmed,
                     Row(
@@ -220,9 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Spacing.hmed,
-                    Text(
+                    const Text(
                       "Select Vehicle",
-                      style: TextStyles.title1.copyWith(color: Colors.black),
                     ),
                     Spacing.hmed,
                     _selectVehicle(),
@@ -274,15 +279,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: "Start Location",
-        floatingLabelStyle: const TextStyle(color: Colors.black),
+        labelStyle:
+            Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.black),
-          // Black border when enabled
           borderRadius: BorderRadius.circular(5.0), // Rounded corners
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.black),
-          // Black border when focused
           borderRadius: BorderRadius.circular(5.0),
         ),
         border: OutlineInputBorder(
@@ -293,13 +297,15 @@ class _HomeScreenState extends State<HomeScreen> {
       dropdownColor: Colors.white,
       iconEnabledColor: Colors.black,
       value: _startLocation,
+      style:
+          Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black),
       items: ['Location 1', 'Location 2', 'Location 3', 'Location 4']
           .map((String location) {
         return DropdownMenuItem<String>(
           value: location,
           child: Text(
             location,
-            style: TextStyles.textFormFieldDefaultStyle_14,
+            style: const TextStyle(color: Colors.black),
           ),
         );
       }).toList(),
@@ -315,7 +321,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         labelText: "End Location",
-        floatingLabelStyle: const TextStyle(color: Colors.black),
+        labelStyle:
+            Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
+        floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.black),
           // Black border when enabled
@@ -332,6 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       dropdownColor: Colors.white,
+      style: Theme.of(context).textTheme.bodySmall,
       // White background for the dropdown
       iconEnabledColor: Colors.black,
 
@@ -341,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
           value: location,
           child: Text(
             location,
-            style: TextStyles.textFormFieldDefaultStyle_14,
+            style: const TextStyle(color: Colors.black),
           ),
         );
       }).toList(),

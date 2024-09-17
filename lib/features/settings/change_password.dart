@@ -39,7 +39,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ),
       body: Stack(
         children: [
-
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Theme.of(context).primaryColor,
+          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -52,25 +56,28 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   top: Radius.circular(50.0), // Adjust radius as needed
                 ),
               ),
-              child:  Padding(
-                padding: const EdgeInsets.only(top: 40,left: 16,right: 16),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
-                        style: TextStyles.textFormFieldDefaultStyle_14,
+                        style: Theme.of(context).textTheme.bodySmall,
                         controller: _currentPasswordController,
                         obscureText: _isObscureCurrent,
                         decoration: InputDecoration(
-                          floatingLabelStyle: const TextStyle(color: Colors.black),
-
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(color: Colors.black)
-                          ),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide:
+                                  const BorderSide(color: Colors.black)),
                           labelText: 'Current Password',
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey),
                           suffixIcon: IconButton(
                             icon: Icon(_isObscureCurrent
                                 ? Icons.visibility
@@ -91,18 +98,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       ),
                       const SizedBox(height: 16.0),
                       TextFormField(
-                        style: TextStyles.textFormFieldDefaultStyle_14,
+                        style: Theme.of(context).textTheme.bodySmall,
                         controller: _newPasswordController,
                         obscureText: _isObscureNew,
                         decoration: InputDecoration(
                           labelText: 'New Password',
-                          floatingLabelStyle: const TextStyle(color: Colors.black),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey),
                           focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)
-                          ),
+                              borderSide: BorderSide(color: Colors.black)),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          ),
+                              borderRadius: BorderRadius.circular(10)),
                           suffixIcon: IconButton(
                             icon: Icon(_isObscureNew
                                 ? Icons.visibility
@@ -125,18 +134,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       ),
                       const SizedBox(height: 16.0),
                       TextFormField(
-                        style: TextStyles.textFormFieldDefaultStyle_14,
+                        style: Theme.of(context).textTheme.bodySmall,
                         controller: _confirmPasswordController,
                         obscureText: _isObscureConfirm,
                         decoration: InputDecoration(
-                          floatingLabelStyle: const TextStyle(color: Colors.black),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
                           labelText: 'Confirm Password',
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.grey),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          ),
+                              borderRadius: BorderRadius.circular(10)),
                           focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)
-                          ),
+                              borderSide: BorderSide(color: Colors.black)),
                           suffixIcon: IconButton(
                             icon: Icon(_isObscureConfirm
                                 ? Icons.visibility
@@ -162,10 +173,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         width: double.infinity,
                         height: 0.06.sh,
                         child: ElevatedButton(
-                          onPressed:() {
-
-                          },
-                          child:  const Text('Change Password'),
+                          onPressed: () {},
+                          child: const Text('Change Password'),
                         ),
                       ),
                     ],
@@ -176,7 +185,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           )
         ],
       ),
-
     );
   }
 }

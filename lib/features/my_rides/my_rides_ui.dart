@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../design-system/styles.dart';
 import '../../shared/app_images.dart';
 import '../../shared/constants.dart';
 import '../drawer.dart';
@@ -15,7 +14,7 @@ class MyRides extends StatelessWidget {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu),
+              icon: const Icon(Icons.menu,color: Colors.white,),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -25,17 +24,23 @@ class MyRides extends StatelessWidget {
       ),
       drawer: CustomDrawer(),
       body: Stack(children: [
-        const Padding(
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Theme.of(context).primaryColor,
+        ),
+        Padding(
           padding: EdgeInsets.all(16.0),
           child: SizedBox(
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'History',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
+                Text('History',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white)),
               ],
             ),
           ),
@@ -60,7 +65,9 @@ class MyRides extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.separated(
-                      separatorBuilder: (context, index) => SizedBox(height: 0.02.sh,),
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: 0.02.sh,
+                      ),
                       itemBuilder: (context, index) {
                         return Container(
                           // height: 0.17.sh,
@@ -71,38 +78,27 @@ class MyRides extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20,left: 10),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, left: 10),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "10 Aug 2024",
-                                          style: TextStyles
-                                              .textFormFieldDefaultStyle_14
-                                              .copyWith(fontWeight: FontWeight.bold),
                                         ),
-
-                                        Text(
+                                        const Text(
                                           "Start Location",
-                                          style: TextStyles
-                                              .textFormFieldDefaultStyle_14
-                                              .copyWith(fontWeight: FontWeight.bold),
                                         ),
-                                        Text("jhgf",
-                                            style: TextStyles
-                                                .textFormFieldDefaultStyle_14),
+                                        const Text("jhgf"),
                                         Spacing.hsm,
-                                        Text(
+                                        const Text(
                                           "Destination Location",
-                                          style: TextStyles
-                                              .textFormFieldDefaultStyle_14
-                                              .copyWith(fontWeight: FontWeight.bold),
                                         ),
-                                        Text('jhgfdfj khgfd',
-                                            style: TextStyles
-                                                .textFormFieldDefaultStyle_14),
+                                        const Text(
+                                          'jhgfdfj khgfd',
+                                        )
                                       ],
                                     ),
                                   ),
@@ -119,25 +115,25 @@ class MyRides extends StatelessWidget {
                                       width: 120,
                                     ),
                                   ),
-
                                 ],
                               ),
                               Padding(
-                                padding:  EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
-                                  width:double.infinity,
+                                  width: double.infinity,
                                   child: OutlinedButton(
-
-                                  onPressed: () {
-                                    Navigator.pushNamed(context,'/CheckOut');
-                                  },
-                                      child:  Text("Book Again")),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/CheckOut');
+                                      },
+                                      child: const Text("Book Again")),
                                 ),
                               )
                             ],
                           ),
                         );
-                      }, itemCount: 10,
+                      },
+                      itemCount: 10,
                     ),
                   ),
                   Spacing.hmed,

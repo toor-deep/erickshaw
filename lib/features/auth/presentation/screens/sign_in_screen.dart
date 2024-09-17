@@ -44,7 +44,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Container(
                   height: 0.6.sh,
                   decoration: const BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.white,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(50.0), // Adjust radius as needed
                     ),
@@ -55,29 +55,24 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                       Text(
                           'Login',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Spacing.hlg,
-                        const Text(
+                        Text(
                           'Welcome Back, We are happy to have you back',
-                          style: TextStyle(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        Spacing.hlg,
-                        Spacing.hlg,
                         Spacing.hlg,
                         TextFormField(
-                          style: TextStyle(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodySmall,
                           onChanged: (String value) {
                             context.read<SignInCubit>().emailChanged(value);
                           },
                           decoration: InputDecoration(
                             label: const Text('Email'),
+                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                             errorText: state.emailStatus == EmailStatus.invalid
                                 ? 'Invalid email'
                                 : null,
@@ -88,9 +83,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         Spacing.hlg,
                         TextFormField(
-                          style: TextStyle(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodySmall,
                           decoration: InputDecoration(
                             label: const Text('Password'),
+                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                             errorText:
                                 state.passwordStatus == PasswordStatus.invalid
                                     ? 'Invalid password'
@@ -132,7 +128,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         Center(
                           child: Text(
                             'Or',
-                            style: TextStyles.title1.copyWith(color: Colors.white),
                           ),
                         ),
                         Spacing.hlg,
@@ -153,9 +148,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: RichText(
                             text: TextSpan(
                               children: [
-                                const TextSpan(
+                                TextSpan(
                                   text: 'Don\'t have an account ? ',
-                                  style: TextStyle(color: Colors.white),
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 TextSpan(
                                   text: 'Sign Up',

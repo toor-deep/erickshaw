@@ -22,13 +22,19 @@ void injectDependencies() {
       remoteDataSource: getIt<AuthRemoteDataSourceFirebase>()));
 
   // Use Cases
-   getIt.registerSingleton(SignInUseCase(authRepository: getIt<AuthRepositoryImpl>()));
-  getIt.registerSingleton(SignUpUseCase(authRepository: getIt<AuthRepositoryImpl>()));
-  getIt.registerSingleton(SignInWithGoogleUseCase(authRepository: getIt<AuthRepositoryImpl>()));
+  getIt.registerSingleton(
+      SignInUseCase(authRepository: getIt<AuthRepositoryImpl>()));
+  getIt.registerSingleton(
+      SignUpUseCase(authRepository: getIt<AuthRepositoryImpl>()));
+  getIt.registerSingleton(
+      SignInWithGoogleUseCase(authRepository: getIt<AuthRepositoryImpl>()));
+  getIt.registerSingleton(
+      SignOutUseCase(authRepository: getIt<AuthRepositoryImpl>()));
   // blocs
-  getIt.registerSingleton<SignInCubit>(
-      SignInCubit(signInUseCase: getIt<SignInUseCase>(),signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>()));
+  getIt.registerSingleton<SignInCubit>(SignInCubit(
+      signInUseCase: getIt<SignInUseCase>(),
+      signInWithGoogleUseCase: getIt<SignInWithGoogleUseCase>(),
+      signOutUseCase: getIt<SignOutUseCase>()));
   getIt.registerSingleton<SignUpCubit>(
       SignUpCubit(signUpUseCase: getIt<SignUpUseCase>()));
-  getIt.registerSingleton<ThemeCubit>(ThemeCubit());
 }
