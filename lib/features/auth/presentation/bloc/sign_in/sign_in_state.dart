@@ -4,21 +4,13 @@ import 'package:erickshawapp/features/auth/domain/entities/auth_user.dart';
 
 enum EmailStatus { unknown, valid, invalid }
 
-enum FormStatus {
-  initial,
-  valid,
-  invalid,
-  submissionInProgress,
-  submissionSuccess,
-  submissionFailure,
-}
 enum PasswordStatus { unknown, valid, invalid }
 class SignInState extends Equatable {
   final String? email;
   final String? password;
   final EmailStatus emailStatus;
   final PasswordStatus passwordStatus;
-  final FormStatus formStatus;
+  final bool isInputValid;
   final bool isLoading;
   final AuthUser? authUser;
 
@@ -28,7 +20,7 @@ class SignInState extends Equatable {
     this.isLoading=false,
     this.emailStatus = EmailStatus.unknown,
     this.passwordStatus = PasswordStatus.unknown,
-    this.formStatus = FormStatus.initial,
+    this.isInputValid=false,
     this.authUser,
   });
 
@@ -37,7 +29,7 @@ class SignInState extends Equatable {
     String? password,
     EmailStatus? emailStatus,
     PasswordStatus? passwordStatus,
-    FormStatus? formStatus,
+    bool? isInputValid,
     bool? isLoading,
     AuthUser? authUser
   }) {
@@ -46,7 +38,7 @@ class SignInState extends Equatable {
       password: password ?? this.password,
       emailStatus: emailStatus ?? this.emailStatus,
       passwordStatus: passwordStatus ?? this.passwordStatus,
-      formStatus: formStatus ?? this.formStatus,
+      isInputValid:  isInputValid ?? this.isInputValid,
       isLoading: isLoading ?? this.isLoading,
       authUser: authUser ?? this.authUser
     );
@@ -58,7 +50,7 @@ class SignInState extends Equatable {
     password,
     emailStatus,
     passwordStatus,
-    formStatus,
+    isInputValid,
     isLoading
   ];
 }

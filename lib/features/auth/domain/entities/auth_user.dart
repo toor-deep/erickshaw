@@ -12,7 +12,7 @@ class AuthUser extends Equatable {
     required this.email,
     this.name,
     this.photoURL,
-    this.phone
+    this.phone,
   });
 
   static const AuthUser empty = AuthUser(
@@ -20,11 +20,36 @@ class AuthUser extends Equatable {
     name: '',
     email: '',
     photoURL: '',
-    phone: ''
+    phone: '',
   );
 
   bool get isEmpty => this == AuthUser.empty;
 
   @override
-  List<Object?> get props => [id, name, email, photoURL,phone];
+  List<Object?> get props => [id, name, email, photoURL, phone];
+
+  // Convert AuthUser to Map (for Firestore)
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'email': email,
+      'name': name,
+      'photoURL': photoURL,
+      'phone': phone,
+    };
+  }
+
+
+  factory AuthUser.fromMap(Map<String, dynamic>? data) {
+    if (data == null) {
+      throw Exception('Data is null');
+    }
+    return AuthUser(
+      id: data['id'],
+      email: data['email'],
+      name: data['name'],
+      photoURL: data['photoURL'],
+      phone: data['phone'],
+    );
+  }
 }

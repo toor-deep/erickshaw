@@ -1,7 +1,7 @@
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:erickshawapp/features/book_ride/check_out.dart';
-import 'package:erickshawapp/features/book_ride/pre_book_ride.dart';
+import 'package:erickshawapp/features/book_ride/presentation/check_out.dart';
+import 'package:erickshawapp/features/book_ride/presentation/pre_book_ride.dart';
 import 'package:erickshawapp/features/my_rides/my_rides_ui.dart';
 import 'package:erickshawapp/features/payment/payment_screen.dart';
 import 'package:erickshawapp/features/privacy_and_terms/privacy.dart';
@@ -13,10 +13,12 @@ import 'package:erickshawapp/features/wallet/my_wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../features/book_ride/home_screen.dart';
+import '../features/book_ride/presentation/home_screen.dart';
 import '../main.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
+  final args = settings.arguments as Map<String, dynamic>?;
+
   switch (settings.name) {
     case '/':
       return MaterialPageRoute(
@@ -32,7 +34,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case '/Home':
       return MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => const HomeScreen(),
       );
 
     case '/MyRides':

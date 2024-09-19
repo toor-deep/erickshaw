@@ -1,19 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_up/sign_up_state.dart';
-import 'package:erickshawapp/shared/toast_alert.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../domain/usecase/sign_up.usecase.dart';
 import '../sign_in/sign_in_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  final SignUpUseCase _signUpUseCase;
-
-  SignUpCubit({
-    required SignUpUseCase signUpUseCase,
-  })  : _signUpUseCase = signUpUseCase,
-        super(const SignUpState());
+  SignUpCubit() : super(const SignUpState());
 
   void emailChanged(String value) {
     final email = value.toString();
@@ -23,9 +13,9 @@ class SignUpCubit extends Cubit<SignUpState> {
     if (emailRegex.hasMatch(email)) {
       emit(
         state.copyWith(
-          email: email,
-          emailStatus: EmailStatus.valid,
-        ),
+            email: email,
+            emailStatus: EmailStatus.valid,
+            isInputValid: inputValidator()),
       );
     } else {
       emit(state.copyWith(emailStatus: EmailStatus.invalid));
@@ -38,39 +28,32 @@ class SignUpCubit extends Cubit<SignUpState> {
     if (password.length >= 6) {
       emit(
         state.copyWith(
-          password: password,
-          passwordStatus: PasswordStatus.valid,
-        ),
+            password: password,
+            passwordStatus: PasswordStatus.valid,
+            isInputValid: inputValidator()),
       );
     } else {
       emit(state.copyWith(passwordStatus: PasswordStatus.invalid));
     }
   }
 
-  Future<void> signUp(Function onSuccess) async {
-    if (!(state.emailStatus == EmailStatus.valid) ||
-        !(state.passwordStatus == PasswordStatus.valid)) {
-      emit(state.copyWith(formStatus: FormStatus.invalid));
-      emit(state.copyWith(formStatus: FormStatus.initial));
-      showSnackbar('Invalid Form', Colors.red);
+  void usernameChanged(String name) async {
+    if (name.isNotEmpty) {
+      emit(state.copyWith(userName: name, isInputValid: inputValidator()));
     }
+  }
 
-    emit(state.copyWith(
-        formStatus: FormStatus.submissionInProgress, isLoading: true));
-    try {
-      final user = await _signUpUseCase(
-        SignUpParams(email: state.email!, password: state.password!),
-      );
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      onSuccess();
-      emit(state.copyWith(
-          formStatus: FormStatus.submissionSuccess,
-          isLoading: false,
-          authUser: user));
-    } catch (err) {
-      emit(state.copyWith(
-          formStatus: FormStatus.submissionFailure, isLoading: false));
+  void phoneChanged(String phone) async {
+    if (phone.isNotEmpty && phone.length == 10) {
+      emit(state.copyWith(phone: phone, isInputValid: inputValidator()));
     }
+  }
+
+  bool inputValidator() {
+    final isEmailValid = state.emailStatus == EmailStatus.valid;
+    final isPasswordValid = state.passwordStatus == PasswordStatus.valid;
+    final isUserNameValid = state.userName?.isNotEmpty ?? false;
+
+    return isEmailValid && isPasswordValid && isUserNameValid;
   }
 }

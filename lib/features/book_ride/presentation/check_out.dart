@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../design-system/styles.dart';
-import '../../shared/app_images.dart';
-import '../../shared/constants.dart';
-import '../drawer.dart';
+import '../../../design-system/styles.dart';
+import '../../../shared/app_images.dart';
+import '../../../shared/constants.dart';
+import '../../drawer.dart';
 import 'home_screen.dart';
 
 class CheckOutScreen extends StatefulWidget {

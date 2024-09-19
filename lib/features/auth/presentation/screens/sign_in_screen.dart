@@ -1,6 +1,9 @@
+import 'package:erickshawapp/features/auth/domain/entities/auth_user.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_in/sign_in_state.dart';
+import 'package:erickshawapp/features/current_user/presentation/bloc/user_cubit.dart';
 import 'package:erickshawapp/shared/app_images.dart';
+import 'package:erickshawapp/shared/toast_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +13,8 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import '../../../../design-system/styles.dart';
 import '../../../../shared/constants.dart';
+import '../bloc/auth/auth_cubit.dart';
+import '../bloc/auth/auth_state.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -21,12 +26,18 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  late SignInCubit signInCubit;
+  @override
+  void initState() {
+    signInCubit=context.read<SignInCubit>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: BlocBuilder<SignInCubit, SignInState>(
+      body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           return Stack(
             children: [
@@ -55,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       Text(
+                        Text(
                           'Login',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
@@ -72,12 +83,15 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                           decoration: InputDecoration(
                             label: const Text('Email'),
-                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                            errorText: state.emailStatus == EmailStatus.invalid
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
+                            errorText: signInCubit.state.emailStatus == EmailStatus.invalid
                                 ? 'Invalid email'
                                 : null,
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
@@ -86,12 +100,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           style: Theme.of(context).textTheme.bodySmall,
                           decoration: InputDecoration(
                             label: const Text('Password'),
-                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
                             errorText:
-                                state.passwordStatus == PasswordStatus.invalid
+                                signInCubit.state.passwordStatus == PasswordStatus.invalid
                                     ? 'Invalid password'
                                     : null,
-
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10)),
@@ -105,27 +121,35 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: double.infinity,
                           height: 0.06.sh,
                           child: ElevatedButton(
-                            onPressed:
-                                context.read<SignInCubit>().state.formStatus ==
-                                        FormStatus.submissionInProgress
-                                    ? null
-                                    : () {
-                                        context.read<SignInCubit>().signIn(() {
-                                          Navigator.pushNamed(context, '/Home');
-                                          setState(() {
-
-                                          });
-                                          emailController.clear();
-                                          passwordController.clear();
-                                        });
-                                      },
-                            child: state.isLoading == true
+                            onPressed: () {
+                              if (context
+                                      .read<SignInCubit>()
+                                      .state
+                                      .isInputValid ==
+                                  false) {
+                                showSnackbar('Invalid input', Colors.red);
+                              } else {
+                                final signInCubit =
+                                    context.read<SignInCubit>().state;
+                                context.read<AuthCubit>().signIn(
+                                    signInCubit.email ?? "",
+                                    signInCubit.password ?? "", () {
+                                  Navigator.pushNamed(context, '/Home');
+                                  setState(() {
+                                    // Any additional state updates can be done here
+                                  });
+                                  emailController.clear();
+                                  passwordController.clear();
+                                });
+                              }
+                            },
+                            child: state.isLoading== true
                                 ? const CircularProgressIndicator()
                                 : const Text('Sign In'),
                           ),
                         ),
                         Spacing.hlg,
-                        Center(
+                        const Center(
                           child: Text(
                             'Or',
                           ),
@@ -137,9 +161,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: SignInButton(
                             Buttons.Google,
                             onPressed: () {
-                                context.read<SignInCubit>().signInWithGoogle((){
-                                  Navigator.pushNamed(context, '/Home');
-                                });
+                              context.read<AuthCubit>().signInWithGoogle(() {
+                                Navigator.pushNamed(context, '/Home');
+                              });
                             },
                           ),
                         ),
@@ -177,4 +201,6 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
+
 }

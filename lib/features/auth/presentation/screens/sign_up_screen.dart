@@ -1,3 +1,5 @@
+import 'package:erickshawapp/features/auth/presentation/bloc/auth/auth_cubit.dart';
+import 'package:erickshawapp/shared/toast_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../design-system/styles.dart';
 import '../../../../shared/app_images.dart';
 import '../../../../shared/constants.dart';
+import '../../../current_user/presentation/bloc/user_cubit.dart';
+import '../../domain/entities/auth_user.dart';
+import '../bloc/auth/auth_state.dart';
 import '../bloc/sign_in/sign_in_state.dart';
 import '../bloc/sign_up/sign_up_cubit.dart';
 import '../bloc/sign_up/sign_up_state.dart';
@@ -21,12 +26,19 @@ class _SignInScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  late SignUpCubit signUpCubit;
+
+  @override
+  void initState() {
+    signUpCubit = context.read<SignUpCubit>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: BlocBuilder<SignUpCubit, SignUpState>(
+      body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           return Stack(
             children: [
@@ -65,6 +77,21 @@ class _SignInScreenState extends State<SignUpScreen> {
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Spacing.hlg,
+                        TextFormField(
+                          style: Theme.of(context).textTheme.bodySmall,
+                          onChanged: (String value) {
+                            context.read<SignUpCubit>().usernameChanged(value);
+                          },
+                          decoration: InputDecoration(
+                            label: const Text('Username'),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                        ),
                         Spacing.hlg,
                         TextFormField(
                           style: Theme.of(context).textTheme.bodySmall,
@@ -73,11 +100,14 @@ class _SignInScreenState extends State<SignUpScreen> {
                           },
                           decoration: InputDecoration(
                             label: const Text('Email'),
-
-                            errorText: state.emailStatus == EmailStatus.invalid
+                            errorText: signUpCubit.state.emailStatus ==
+                                    EmailStatus.invalid
                                 ? 'Invalid email'
                                 : null,
-                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -87,12 +117,14 @@ class _SignInScreenState extends State<SignUpScreen> {
                           style: Theme.of(context).textTheme.bodySmall,
                           decoration: InputDecoration(
                             label: const Text('Password'),
-                            errorText:
-                                state.passwordStatus == PasswordStatus.invalid
-                                    ? 'Invalid password'
-                                    : null,
-                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-
+                            errorText: signUpCubit.state.passwordStatus ==
+                                    PasswordStatus.invalid
+                                ? 'Invalid password'
+                                : null,
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -103,10 +135,15 @@ class _SignInScreenState extends State<SignUpScreen> {
                         Spacing.hlg,
                         TextFormField(
                           style: Theme.of(context).textTheme.bodySmall,
+                          onChanged: (String value) {
+                            context.read<SignUpCubit>().phoneChanged(value);
+                          },
                           decoration: InputDecoration(
                             label: const Text('Phone'),
-
-                            labelStyle:Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -116,18 +153,35 @@ class _SignInScreenState extends State<SignUpScreen> {
                           width: double.infinity,
                           height: 0.06.sh,
                           child: ElevatedButton(
-                            onPressed:
-                                context.read<SignUpCubit>().state.formStatus ==
-                                        FormStatus.submissionInProgress
-                                    ? null
-                                    : () {
-                                        context.read<SignUpCubit>().signUp(() {
-                                          Navigator.pushNamed(context, '/Home');
-                                          emailController.clear();
-                                          phoneNumberController.clear();
-                                          passwordController.clear();
-                                        });
-                                      },
+                            onPressed: () {
+                              if (context
+                                      .read<SignUpCubit>()
+                                      .state
+                                      .isInputValid ==
+                                  false) {
+                                showSnackbar('Invalid Input', Colors.red);
+                              } else {
+                                final signUpCubitState =
+                                    context.read<SignUpCubit>().state;
+                                context.read<AuthCubit>().signUp(
+                                    signUpCubitState.email ?? "",
+                                    signUpCubitState.password ?? "", () {
+                                  context.read<UserCubit>().addUser(AuthUser(
+                                      id: '',
+                                      email: signUpCubitState.email ?? "",
+                                      name: signUpCubitState.userName ?? "",
+                                      photoURL: '',
+                                      phone: signUpCubitState.phone ?? ""));
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/Home',
+                                  );
+                                  emailController.clear();
+                                  phoneNumberController.clear();
+                                  passwordController.clear();
+                                });
+                              }
+                            },
                             child: state.isLoading == true
                                 ? const CircularProgressIndicator()
                                 : const Text('Sign Up'),
@@ -138,7 +192,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                           child: RichText(
                             text: TextSpan(
                               children: [
-                                 TextSpan(
+                                TextSpan(
                                   text: 'Already have an account ? ',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),

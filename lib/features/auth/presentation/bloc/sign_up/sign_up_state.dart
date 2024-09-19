@@ -7,37 +7,45 @@ import '../sign_in/sign_in_state.dart';
 class SignUpState extends Equatable {
   final String? email;
   final String? password;
+  final String? userName;
   final EmailStatus emailStatus;
+  final String? phone;
   final PasswordStatus passwordStatus;
-  final FormStatus formStatus;
+  final bool isInputValid;
   final bool isLoading;
   final AuthUser? authUser;
 
   const SignUpState({
     this.email,
     this.password,
+    this.phone,
+    this.userName,
     this.isLoading=false,
     this.emailStatus = EmailStatus.unknown,
     this.passwordStatus = PasswordStatus.unknown,
-    this.formStatus = FormStatus.initial,
+    this.isInputValid=false,
     this.authUser
   });
 
   SignUpState copyWith({
     String? email,
    String? password,
+    String? userName,
+    String? phone,
     EmailStatus? emailStatus,
     PasswordStatus? passwordStatus,
-    FormStatus? formStatus,
+    bool? isInputValid,
     bool? isLoading,
     AuthUser? authUser
   }) {
     return SignUpState(
       email: email ?? this.email,
       password: password ?? this.password,
+      userName: userName ?? this.userName,
+      phone: phone ?? this.phone,
       emailStatus: emailStatus ?? this.emailStatus,
       passwordStatus: passwordStatus ?? this.passwordStatus,
-      formStatus: formStatus ?? this.formStatus,
+      isInputValid:  isInputValid ?? this.isInputValid,
       isLoading: isLoading ?? this.isLoading,
       authUser: authUser ?? this.authUser
     );
@@ -49,7 +57,7 @@ class SignUpState extends Equatable {
     password,
     emailStatus,
     passwordStatus,
-    formStatus,
+    isInputValid,
     isLoading
   ];
 }

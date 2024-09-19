@@ -48,7 +48,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   }) async {
     try {
       firebase_auth.UserCredential credential =
-      await _firebaseAuth.createUserWithEmailAndPassword(
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -70,7 +70,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   }) async {
     try {
       firebase_auth.UserCredential credential =
-      await _firebaseAuth.signInWithEmailAndPassword(
+          await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -95,16 +95,16 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
       }
 
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
 
       final firebase_auth.AuthCredential credential =
-      firebase_auth.GoogleAuthProvider.credential(
+          firebase_auth.GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       final firebase_auth.UserCredential userCredential =
-      await _firebaseAuth.signInWithCredential(credential);
+          await _firebaseAuth.signInWithCredential(credential);
 
       if (userCredential.user == null) {
         throw Exception('Sign in with Google failed');

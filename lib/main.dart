@@ -1,5 +1,6 @@
 
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:erickshawapp/features/current_user/presentation/bloc/user_cubit.dart';
 import 'package:erickshawapp/shared/constants.dart';
 import 'package:erickshawapp/shared/state/app-theme/app_theme_cubit.dart';
 import 'package:erickshawapp/splash_screen.dart';
@@ -14,6 +15,7 @@ import 'config/injections/dependencies.dart';
 import 'core/routing.dart';
 import 'core/theme/app_theme.dart';
 import 'design-system/styles.dart';
+import 'features/auth/presentation/bloc/auth/auth_cubit.dart';
 import 'features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_cubit.dart';
 
@@ -28,6 +30,8 @@ void main() async {
         BlocProvider(create: (context) => getIt<SignInCubit>()),
         BlocProvider(create: (context) => getIt<SignUpCubit>()),
         BlocProvider(create: (_) => getIt<ThemeCubit>()),
+        BlocProvider(create: (context) => getIt<AuthCubit>(),),
+        BlocProvider(create: (context) => getIt<UserCubit>(),)
         // Add other providers here
       ],
       child: const MyApp(),

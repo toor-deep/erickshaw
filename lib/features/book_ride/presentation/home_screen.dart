@@ -2,32 +2,42 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:erickshawapp/design-system/app_colors.dart';
 import 'package:erickshawapp/design-system/styles.dart';
+import 'package:erickshawapp/features/auth/domain/entities/auth_user.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
+import 'package:erickshawapp/features/current_user/presentation/bloc/user_state.dart';
 import 'package:erickshawapp/features/drawer.dart';
 import 'package:erickshawapp/shared/app_images.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../shared/constants.dart';
+import '../../../shared/constants.dart';
+import '../../current_user/presentation/bloc/user_cubit.dart';
 
 enum VehicleType { rickshaw, none }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   late SignInCubit signInCubit;
+  late UserCubit userCubit;
   VehicleType selectedVehicle = VehicleType.none;
   String? _startLocation;
   String? _endLocation;
+  User? currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     signInCubit = context.read<SignInCubit>();
+    userCubit = context.read<UserCubit>();
+    userCubit.fetchUser(currentUser?.email ?? "");
     super.initState();
   }
 
@@ -50,10 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
               backgroundColor: kPrimaryColor,
-              backgroundImage: signInCubit.state.authUser?.photoURL != null &&
-                      signInCubit.state.authUser!.photoURL!.isNotEmpty
+              backgroundImage: userCubit.state.authUser?.photoURL != null &&
+                      (userCubit.state.authUser?.photoURL ?? "").isNotEmpty
                   ? CachedNetworkImageProvider(
-                      signInCubit.state.authUser!.photoURL!)
+                      userCubit.state.authUser?.photoURL ?? "")
                   : const AssetImage(AppImages.user), // Fallback image
               radius: 20.0, // Adjust radius as needed
             ),
@@ -69,31 +79,39 @@ class _HomeScreenState extends State<HomeScreen> {
             height: double.infinity,
             color: Theme.of(context).primaryColor,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          BlocBuilder<UserCubit, UserState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Row(
                     children: [
-                      Text(
-                        'Hello, ${signInCubit.state.authUser?.name ?? "User"}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold, color: Colors.white),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hello, ${userCubit.state.authUser?.name ?? "User"}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                          ),
+                          Spacing.hmed,
+                          Text("how are you ? hope you are doing great",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(color: Colors.white)),
+                        ],
                       ),
-                      Spacing.hmed,
-                      Text("how are you ? hope you are doing great",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: Colors.white)),
                     ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
           Spacing.hmed,
           Positioned(
