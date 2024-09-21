@@ -80,7 +80,7 @@ class CustomDrawer extends StatelessWidget {
                     color: Colors.black,
                   ),
                   title: Text(
-                    'Rides',
+                    ' Requested Rides',
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
@@ -88,6 +88,22 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pushNamed(context, '/MyRides');
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.bike_scooter,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'Scheduled Rides',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/PreBookList');
                   },
                 ),
                 ListTile(

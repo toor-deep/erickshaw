@@ -1,3 +1,4 @@
+import 'package:erickshawapp/features/auth/presentation/bloc/auth/auth_cubit.dart';
 import 'package:erickshawapp/shared/dialog.dart';
 import 'package:erickshawapp/shared/state/app-theme/app_theme_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../shared/constants.dart';
 import '../drawer.dart';
 
 class Settings extends StatefulWidget {
@@ -95,7 +97,16 @@ class _SettingsState extends State<Settings> {
                         ),
                         ListTile(
                           onTap: () {
-                            showDeleteDialog(context: context, onTap: () {});
+                            showDeleteDialog(
+                                context: context,
+                                onTap: () {
+                                  context.read<AuthCubit>().deleteAccount(() {
+                                    Navigator.of(
+                                            appNavigationKey.currentContext!)
+                                        .pushNamedAndRemoveUntil('/SignIn',
+                                            (Route<dynamic> route) => false);
+                                  });
+                                });
                           },
                           title: Text("Delete Account",
                               style: Theme.of(context).textTheme.bodyMedium),

@@ -1,19 +1,19 @@
 import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:erickshawapp/features/book_ride/presentation/check_out.dart';
-import 'package:erickshawapp/features/book_ride/presentation/pre_book_ride.dart';
-import 'package:erickshawapp/features/my_rides/my_rides_ui.dart';
 import 'package:erickshawapp/features/payment/payment_screen.dart';
 import 'package:erickshawapp/features/privacy_and_terms/privacy.dart';
 import 'package:erickshawapp/features/privacy_and_terms/terms_and_coditions.dart';
 import 'package:erickshawapp/features/profile/my_profile.dart';
+import 'package:erickshawapp/features/rides/presentation/screens/prebook_rides/pre_book_rides_list_view.dart';
 import 'package:erickshawapp/features/settings/change_password.dart';
 import 'package:erickshawapp/features/settings/settings_view.dart';
 import 'package:erickshawapp/features/wallet/my_wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../features/book_ride/presentation/home_screen.dart';
+import '../features/rides/presentation/screens/check_out.dart';
+import '../features/rides/presentation/screens/home_screen.dart';
+import '../features/rides/presentation/screens/my_rides_ui.dart';
+import '../features/rides/presentation/screens/prebook_rides/pre_book_ride.dart';
 import '../main.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -58,18 +58,35 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const Privacy(),
       );
     case '/ChangePassword':
-      return MaterialPageRoute(builder: (context) => const ChangePasswordScreen(),);
+      return MaterialPageRoute(
+        builder: (context) => const ChangePasswordScreen(),
+      );
 
     case '/MyProfile':
-      return MaterialPageRoute(builder: (context) => const MyProfile(),);
+      return MaterialPageRoute(
+        builder: (context) => const MyProfile(),
+      );
     case '/CheckOut':
-      return MaterialPageRoute(builder: (context) => CheckOutScreen(),);
+      return MaterialPageRoute(
+        builder: (context) => CheckOutScreen(
+          startLocation: '',
+          endLocation: '',
+        ),
+      );
 
     case '/Payment':
-      return MaterialPageRoute(builder: (context) => const PaymentScreen(),);
+      return MaterialPageRoute(
+        builder: (context) => const PaymentScreen(),
+      );
 
     case '/PreBook':
-      return MaterialPageRoute(builder: (context) => const PreBookRide(),);
+      return MaterialPageRoute(
+        builder: (context) => const PreBookRide(),
+      );
+    case '/PreBookList':
+      return MaterialPageRoute(
+        builder: (context) => const MyPreBookRides(),
+      );
 
     default:
       return MaterialPageRoute(

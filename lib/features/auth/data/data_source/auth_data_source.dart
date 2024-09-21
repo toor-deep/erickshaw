@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../models/auth_user_model.dart';
@@ -17,6 +18,9 @@ abstract class AuthRemoteDataSource {
   });
 
   Future<AuthUserModel> signInWithGoogle(); // Add Google sign-in
+
+  Future<void> changePassword(String newPassword);
+  Future<void> deleteAccount();
 
   Future<void> signOut();
 }
@@ -123,6 +127,28 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
       await _googleSignIn.signOut();
     } catch (error) {
       throw Exception('Sign out failed: $error');
+    }
+  }
+
+  @override
+  Future<void> changePassword(String newPassword) async {
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      await user.updatePassword(newPassword);
+    } else {
+      throw FirebaseAuthException(
+          code: 'user-not-found', message: 'No user currently signed in.');
+    }
+  }
+
+
+  @override
+  Future<void> deleteAccount() async {
+    try {
+      User user = FirebaseAuth.instance.currentUser!;
+      await user.delete();
+    } catch (e) {
+      print('Error deleting user: $e');
     }
   }
 }

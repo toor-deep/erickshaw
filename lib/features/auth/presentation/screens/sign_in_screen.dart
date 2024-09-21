@@ -27,9 +27,10 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late SignInCubit signInCubit;
+
   @override
   void initState() {
-    signInCubit=context.read<SignInCubit>();
+    signInCubit = context.read<SignInCubit>();
     super.initState();
   }
 
@@ -87,7 +88,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(color: Colors.grey),
-                            errorText: signInCubit.state.emailStatus == EmailStatus.invalid
+                            errorText: signInCubit.state.emailStatus ==
+                                    EmailStatus.invalid
                                 ? 'Invalid email'
                                 : null,
                             border: OutlineInputBorder(
@@ -104,10 +106,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(color: Colors.grey),
-                            errorText:
-                                signInCubit.state.passwordStatus == PasswordStatus.invalid
-                                    ? 'Invalid password'
-                                    : null,
+                            errorText: signInCubit.state.passwordStatus ==
+                                    PasswordStatus.invalid
+                                ? 'Invalid password'
+                                : null,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10)),
@@ -143,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 });
                               }
                             },
-                            child: state.isLoading== true
+                            child: state.isLoading == true
                                 ? const CircularProgressIndicator()
                                 : const Text('Sign In'),
                           ),
@@ -161,7 +163,15 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: SignInButton(
                             Buttons.Google,
                             onPressed: () {
-                              context.read<AuthCubit>().signInWithGoogle(() {
+                              context
+                                  .read<AuthCubit>()
+                                  .signInWithGoogle((value) {
+                                context.read<UserCubit>().addUser(AuthUser(
+                                    id: '',
+                                    email: value.email ?? "",
+                                    name: value.name?? "",
+                                    photoURL: value.photoURL??"",
+                                    phone: value.phone ?? ""));
                                 Navigator.pushNamed(context, '/Home');
                               });
                             },
@@ -201,6 +211,4 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-
-
 }

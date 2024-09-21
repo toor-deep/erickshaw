@@ -52,4 +52,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     await remoteDataSource.signOut();
   }
+
+  @override
+  Future<void> changePassword(String newPassword) async {
+    await remoteDataSource.changePassword(newPassword);
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    return remoteDataSource.deleteAccount();
+  }
 }

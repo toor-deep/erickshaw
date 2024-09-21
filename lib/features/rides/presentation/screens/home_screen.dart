@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:erickshawapp/design-system/app_colors.dart';
 import 'package:erickshawapp/design-system/styles.dart';
-import 'package:erickshawapp/features/auth/domain/entities/auth_user.dart';
-import 'package:erickshawapp/features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
 import 'package:erickshawapp/features/current_user/presentation/bloc/user_state.dart';
 import 'package:erickshawapp/features/drawer.dart';
 import 'package:erickshawapp/shared/app_images.dart';
@@ -13,8 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../shared/constants.dart';
-import '../../current_user/presentation/bloc/user_cubit.dart';
+import '../../../../shared/constants.dart';
+import '../../../auth/presentation/bloc/sign_in/sign_in_cubit.dart';
+import '../../../current_user/presentation/bloc/user_cubit.dart';
+import '../bloc/ride_cubit.dart';
+import 'check_out.dart';
 
 enum VehicleType { rickshaw, none }
 
@@ -26,7 +27,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late SignInCubit signInCubit;
+  late
+  SignInCubit signInCubit;
   late UserCubit userCubit;
   VehicleType selectedVehicle = VehicleType.none;
   String? _startLocation;
@@ -269,15 +271,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             return;
                           }
 
-                          Navigator.pushNamed(
-                            context,
-                            '/CheckOut',
-                            arguments: {
-                              'vehicle': selectedVehicle,
-                              'startLocation': startLocation,
-                              'endLocation': endLocation,
-                            },
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CheckOutScreen(
+                                    startLocation: startLocation,
+                                    endLocation: endLocation),
+                              ));
                         },
                         child: const Text('Next'),
                       ),

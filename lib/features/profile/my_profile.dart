@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erickshawapp/features/auth/domain/entities/auth_user.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../shared/app_images.dart';
 import '../../shared/constants.dart';
@@ -26,6 +29,30 @@ class _MyProfileState extends State<MyProfile> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   bool isUpdate = true;
+  File? _imageFile;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      if (pickedFile != null) {
+        setState(() {
+          _imageFile = File(pickedFile.path);
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error picking image: $e')),
+      );
+    }
+  }
+
+  Future<void> _deleteImage() async {
+    setState(() {
+      _imageFile = null;
+    });
+  }
 
   @override
   void initState() {
@@ -68,13 +95,15 @@ class _MyProfileState extends State<MyProfile> {
                             fit: BoxFit.cover,
                             width: 100,
                             height: 100,
-                            image: userCubit.state.authUser?.photoURL != null &&
-                                    userCubit
-                                        .state.authUser!.photoURL!.isNotEmpty
-                                ? CachedNetworkImageProvider(
-                                    userCubit.state.authUser!.photoURL!)
-                                : const AssetImage(AppImages.user)
-                                    as ImageProvider,
+                            image: _imageFile != null
+                                ? FileImage(_imageFile!) as ImageProvider
+                                : userCubit.state.authUser?.photoURL != null &&
+                                        userCubit.state.authUser!.photoURL!
+                                            .isNotEmpty
+                                    ? CachedNetworkImageProvider(
+                                        userCubit.state.authUser!.photoURL!)
+                                    : const AssetImage(AppImages.user)
+                                        as ImageProvider,
                           ),
                         ),
                         Positioned(
@@ -82,7 +111,12 @@ class _MyProfileState extends State<MyProfile> {
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              showOptions(context: context);
+                              showOptions(context: context,
+                                onImageSelected: (File imageFile) {
+                                  setState(() {
+                                    _imageFile = imageFile;
+                                  });
+                                },);
                             },
                             child: Container(
                               decoration: const BoxDecoration(

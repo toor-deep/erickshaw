@@ -1,5 +1,3 @@
-
-import 'package:erickshawapp/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:erickshawapp/features/current_user/presentation/bloc/user_cubit.dart';
 import 'package:erickshawapp/shared/constants.dart';
 import 'package:erickshawapp/shared/state/app-theme/app_theme_cubit.dart';
@@ -10,14 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-
 import 'config/injections/dependencies.dart';
 import 'core/routing.dart';
 import 'core/theme/app_theme.dart';
-import 'design-system/styles.dart';
 import 'features/auth/presentation/bloc/auth/auth_cubit.dart';
 import 'features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
 import 'features/auth/presentation/bloc/sign_up/sign_up_cubit.dart';
+import 'features/rides/presentation/bloc/ride_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,8 +27,15 @@ void main() async {
         BlocProvider(create: (context) => getIt<SignInCubit>()),
         BlocProvider(create: (context) => getIt<SignUpCubit>()),
         BlocProvider(create: (_) => getIt<ThemeCubit>()),
-        BlocProvider(create: (context) => getIt<AuthCubit>(),),
-        BlocProvider(create: (context) => getIt<UserCubit>(),)
+        BlocProvider(
+          create: (context) => getIt<AuthCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<UserCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<RideCubit>(),
+        )
         // Add other providers here
       ],
       child: const MyApp(),
@@ -71,23 +75,22 @@ class MyApp extends StatelessWidget {
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MaterialApp(
-                navigatorKey: appNavigationKey,
-                title: kAppName,
-                debugShowCheckedModeBanner: false,
-                themeMode: ThemeMode.light,
-                debugShowMaterialGrid: false,
+                  navigatorKey: appNavigationKey,
+                  title: kAppName,
+                  debugShowCheckedModeBanner: false,
+                  themeMode: ThemeMode.light,
+                  debugShowMaterialGrid: false,
                   theme: AppTheme.data(state.isDarkMode),
-                builder: (context, child) => Stack(
-                  children: [
-                    child ?? const SizedBox(),
-                    const DropdownAlert(
-                      position: AlertPosition.TOP,
-                    )
-                  ],
-                ),
-                onGenerateRoute: generateRoute,
-                home: const SplashView()
-              );
+                  builder: (context, child) => Stack(
+                        children: [
+                          child ?? const SizedBox(),
+                          const DropdownAlert(
+                            position: AlertPosition.TOP,
+                          )
+                        ],
+                      ),
+                  onGenerateRoute: generateRoute,
+                  home: const SplashView());
             },
           ),
         ),
