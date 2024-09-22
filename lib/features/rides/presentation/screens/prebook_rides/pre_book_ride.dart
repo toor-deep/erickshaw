@@ -173,7 +173,8 @@ class _PreBookRideState extends State<PreBookRide> {
                                         startLocation: _startLocation!,
                                         endLocation: _endLocation!,
                                         vehicleType: 'E Rickshaw',
-                                        price: double.parse('44')));
+                                        price: double.parse('44'),
+                                ));
                               } else {
                                 // Show a message to select both date and time
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -310,9 +311,7 @@ class _PreBookRideState extends State<PreBookRide> {
   String formatTimeOfDay(TimeOfDay time) {
     final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-    final hour = time.hourOfPeriod == 0
-        ? 12
-        : time.hourOfPeriod;
+    final hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
     final period = time.period == DayPeriod.am ? 'AM' : 'PM';
     return "${hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')} $period";
   }

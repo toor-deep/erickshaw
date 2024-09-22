@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../shared/constants.dart';
 import '../../../auth/presentation/bloc/sign_in/sign_in_cubit.dart';
@@ -27,8 +28,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late
-  SignInCubit signInCubit;
+  late SignInCubit signInCubit;
   late UserCubit userCubit;
   VehicleType selectedVehicle = VehicleType.none;
   String? _startLocation;
@@ -171,6 +171,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       }).toList(),
                     ),
                     Spacing.hmed,
+                    const TextScroll(
+                      delayBefore: Duration(milliseconds: 500),
+                      'You can pay for your active rides from your "Requested Rides" section.',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    Spacing.hmed,
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/PreBook');
@@ -209,8 +215,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Container(
                               margin: const EdgeInsets.only(top: 16),
-                              height: 25,
-                              width: 25,
+                              height: 20,
+                              width: 20,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border:
@@ -226,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Icon(
                               Icons.location_on,
                               color: Colors.black,
-                              size: 40,
+                              size: 30,
                             ),
                           ],
                         ),
@@ -294,89 +300,104 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget startLocation() {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: "Start Location",
-        labelStyle:
-            Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(5.0), // Rounded corners
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-      ),
-      dropdownColor: Colors.white,
-      iconEnabledColor: Colors.black,
-      value: _startLocation,
-      style:
-          Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black),
-      items: ['Location 1', 'Location 2', 'Location 3', 'Location 4']
-          .map((String location) {
-        return DropdownMenuItem<String>(
-          value: location,
-          child: Text(
-            location,
-            style: const TextStyle(color: Colors.black),
+    return SizedBox(
+      height: 0.05.sh,
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: "Start Location",
+          labelStyle: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: Colors.grey),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(5.0), // Rounded corners
           ),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() {
-          _startLocation = newValue;
-        });
-      },
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        dropdownColor: Colors.white,
+        iconEnabledColor: Colors.black,
+        value: _startLocation,
+        style: Theme.of(context)
+            .textTheme
+            .bodySmall
+            ?.copyWith(color: Colors.black, fontSize: 12),
+        items: ['Location 1', 'Location 2', 'Location 3', 'Location 4']
+            .map((String location) {
+          return DropdownMenuItem<String>(
+            value: location,
+            child: Text(
+              location,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: Colors.black, fontSize: 12),
+            ),
+          );
+        }).toList(),
+        onChanged: (String? newValue) {
+          setState(() {
+            _startLocation = newValue;
+          });
+        },
+      ),
     );
   }
 
   Widget destination(List<String> destinations) {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: "End Location",
-        labelStyle:
-            Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
-        floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          // Black border when enabled
-          borderRadius: BorderRadius.circular(5.0), // Rounded corners
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          // Black border when focused
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-      ),
-      dropdownColor: Colors.white,
-      style: Theme.of(context).textTheme.bodySmall,
-      // White background for the dropdown
-      iconEnabledColor: Colors.black,
-
-      value: _endLocation,
-      items: destinations.map((String location) {
-        return DropdownMenuItem<String>(
-          value: location,
-          child: Text(
-            location,
-            style: const TextStyle(color: Colors.black),
+    return SizedBox(
+      height: 0.05.sh,
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: "End Location",
+          labelStyle: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: Colors.grey),
+          floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            // Black border when enabled
+            borderRadius: BorderRadius.circular(5.0), // Rounded corners
           ),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() {
-          _endLocation = newValue;
-        });
-      },
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            // Black border when focused
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        dropdownColor: Colors.white,
+        style: Theme.of(context).textTheme.bodySmall,
+        // White background for the dropdown
+        iconEnabledColor: Colors.black,
+
+        value: _endLocation,
+        items: destinations.map((String location) {
+          return DropdownMenuItem<String>(
+            value: location,
+            child: Text(
+              location,
+              style: const TextStyle(color: Colors.black, fontSize: 12),
+            ),
+          );
+        }).toList(),
+        onChanged: (String? newValue) {
+          setState(() {
+            _endLocation = newValue;
+          });
+        },
+      ),
     );
   }
 
@@ -407,8 +428,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Image.asset(
                   AppImages.erickshaw,
-                  height: 120,
-                  width: 120,
+                  height: 100,
+                  width: 100,
                 ),
                 const SizedBox(height: 8),
                 const Text(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erickshawapp/features/auth/domain/entities/auth_user.dart';
+import 'package:erickshawapp/features/auth/presentation/bloc/auth/auth_cubit.dart';
 import 'package:erickshawapp/features/auth/presentation/bloc/sign_in/sign_in_cubit.dart';
 import 'package:erickshawapp/features/current_user/presentation/bloc/user_cubit.dart';
 import 'package:erickshawapp/features/current_user/presentation/bloc/user_state.dart';
@@ -30,6 +31,7 @@ class _MyProfileState extends State<MyProfile> {
   final TextEditingController emailController = TextEditingController();
   bool isUpdate = true;
   File? _imageFile;
+  String? _imageUrl;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -85,7 +87,7 @@ class _MyProfileState extends State<MyProfile> {
                   alignment: Alignment.topCenter,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     child: Stack(
                       children: [
@@ -111,12 +113,17 @@ class _MyProfileState extends State<MyProfile> {
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              showOptions(context: context,
+                              showOptions(
+                                context: context,
                                 onImageSelected: (File imageFile) {
+                                  context
+                                      .read<UserCubit>()
+                                      .saveImageToFirebase(imageFile);
                                   setState(() {
                                     _imageFile = imageFile;
                                   });
-                                },);
+                                },
+                              );
                             },
                             child: Container(
                               decoration: const BoxDecoration(

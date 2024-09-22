@@ -3,6 +3,7 @@ import 'package:erickshawapp/features/rides/domain/entity/requested_ride.dart';
 import 'package:erickshawapp/features/rides/domain/usecase/get_pre_book_rides_list.usecase.dart';
 import 'package:erickshawapp/features/rides/presentation/bloc/ride_state.dart';
 import 'package:erickshawapp/shared/toast_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/api/api_url.dart';
@@ -31,6 +32,7 @@ class RideCubit extends Cubit<RideState> {
       : super(const RideState());
 
   bool isActiveRide = false;
+  final userId = FirebaseAuth.instance.currentUser?.uid;
 
   Future<void> sendRideRequest(SendRequestParams params) async {
     emit(state.copyWith(isLoading: true));
@@ -139,6 +141,30 @@ class RideCubit extends Cubit<RideState> {
       emit(state.copyWith(errorMessage: e.toString()));
     } finally {
       emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<void> paymentCompleted(String requestId,String userId) async {
+    final List<RideRequestEntity> updatedList = List.from(state.allRidesList!);
+    final index = updatedList.indexWhere((ride) => ride.id == requestId);
+
+    if (index != -1) {
+      updatedList[index] = updatedList[index].copyWith(status: 'completed');
+
+      try {
+        await FirebaseFirestore.instance
+            .collection('requested_rides')
+            .doc(userId)
+            .collection('rides')
+            .doc(requestId)
+            .update({'status': 'completed'});
+     isActiveRide=false;
+        showSnackbar('You have successfully completed your ride', Colors.green);
+      } catch (e) {
+        showSnackbar('Error updating ride status: $e', Colors.red);
+      }
+
+      emit(state.copyWith(allRidesList: updatedList));
     }
   }
 }

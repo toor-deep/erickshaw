@@ -76,7 +76,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case '/Payment':
       return MaterialPageRoute(
-        builder: (context) => const PaymentScreen(),
+        builder: (context) => PaymentScreen(),
       );
 
     case '/PreBook':

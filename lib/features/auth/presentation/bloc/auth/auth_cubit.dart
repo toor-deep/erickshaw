@@ -62,15 +62,12 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final user = await _signInWithGoogleUseCase.call();
 
-      final querySnapshot = await ApiUrl.users
-          .where('email', isEqualTo: user.email)
-          .get();
+      final querySnapshot =
+          await ApiUrl.users.where('email', isEqualTo: user.email).get();
 
       if (querySnapshot.docs.isEmpty) {
         onSuccess(user);
       }
-
-
 
       emit(state.copyWith(authUser: user, isLoading: false));
     } catch (err) {
@@ -135,4 +132,5 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(isLoading: false));
     }
   }
+
 }

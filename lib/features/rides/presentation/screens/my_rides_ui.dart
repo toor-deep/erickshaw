@@ -1,3 +1,4 @@
+import 'package:erickshawapp/features/payment/payment_screen.dart';
 import 'package:erickshawapp/features/rides/domain/usecase/cancel_ride.usecase.dart';
 import 'package:erickshawapp/features/rides/presentation/bloc/ride_cubit.dart';
 import 'package:erickshawapp/features/rides/presentation/bloc/ride_state.dart';
@@ -192,8 +193,17 @@ class _MyRidesState extends State<MyRides> {
                                                 }
 
                                                 if (item.status == 'accepted') {
-                                                  Navigator.pushNamed(
-                                                      context, '/Payment');
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            PaymentScreen(
+                                                          rideId: item.id,
+                                                          userId: currentUser
+                                                                  ?.uid ??
+                                                              "",
+                                                        ),
+                                                      ));
                                                 }
                                               },
                                               child: Text(item.status ==

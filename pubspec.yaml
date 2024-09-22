@@ -64,6 +64,8 @@ dependencies:
   dartz:
   intl: ^0.19.0
   image_picker: ^1.1.2
+  firebase_storage:
+  text_scroll: ^0.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

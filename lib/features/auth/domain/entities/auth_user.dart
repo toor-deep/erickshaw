@@ -28,7 +28,6 @@ class AuthUser extends Equatable {
   @override
   List<Object?> get props => [id, name, email, photoURL, phone];
 
-  // Convert AuthUser to Map (for Firestore)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -38,7 +37,6 @@ class AuthUser extends Equatable {
       'phone': phone,
     };
   }
-
 
   factory AuthUser.fromMap(Map<String, dynamic>? data) {
     if (data == null) {
@@ -50,6 +48,22 @@ class AuthUser extends Equatable {
       name: data['name'],
       photoURL: data['photoURL'],
       phone: data['phone'],
+    );
+  }
+
+  AuthUser copyWith({
+    String? id,
+    String? email,
+    String? name,
+    String? photoURL,
+    String? phone,
+  }) {
+    return AuthUser(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      photoURL: photoURL ?? this.photoURL,
+      phone: phone ?? this.phone,
     );
   }
 }
